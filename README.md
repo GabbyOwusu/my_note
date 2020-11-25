@@ -1,4 +1,4 @@
-# my_note
+# MyNote
 
 A personal notes app for taking notes and making memos.
 
@@ -6,6 +6,10 @@ A personal notes app for taking notes and making memos.
 
 - Speech-to-text
 - Ocr (in -progress)
+
+## Preview
+
+![Screenshot](https://github.com/GabbyOwusu/my_note/blob/main/images/appImage.png)
 
 
 ## Getting Started
