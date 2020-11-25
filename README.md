@@ -1,6 +1,12 @@
 # my_note
 
-A new Flutter project.
+A personal notes app for taking notes and making memos.
+
+## Features
+
+- Speech-to-text
+- Ocr (in -progress)
+
 
 ## Getting Started
 
