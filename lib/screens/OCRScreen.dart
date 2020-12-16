@@ -30,6 +30,7 @@ class _OcrState extends State<Ocr> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       ),
       body: SingleChildScrollView(
+        reverse: true,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
