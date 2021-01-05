@@ -1,5 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:my_note/models/Note.dart';
 import 'package:my_note/providers/BaseProvider.dart';
 import 'package:my_note/services/FileContract.dart';
@@ -11,13 +14,17 @@ class NotesProvider extends BaseProvider {
     print('list of notes....$_notesList');
   }
 
-  final _storage = sl.get<FileContract>();
-
   List<Note> _notesList = [];
+  String _extractedText = '';
+  File _image;
 
   List<Note> get notes => _notesList;
+  String get extracted => _extractedText;
 
   Note note = Note();
+  final _storage = sl.get<FileContract>();
+
+  TextRecognizer textRecognizer = FirebaseVision.instance.textRecognizer();
 
   void addNote(Note n) {
     _notesList.add(n);
@@ -58,5 +65,28 @@ class NotesProvider extends BaseProvider {
     } catch (e) {
       print('Error here $e');
     }
+  }
+
+  Future<File> imageFromDevice(ImageSource imagesorce) async {
+    PickedFile picture = await _storage.getImage(imagesorce);
+    if (picture != null) {
+      _image = File(picture.path);
+    } else {
+      print('No image selected');
+    }
+    return _image;
+  }
+
+  Future processImage(ImageSource source) async {
+    File visionimage = await imageFromDevice(source);
+    if (visionimage != null) {
+      FirebaseVisionImage image = FirebaseVisionImage.fromFile(visionimage);
+      VisionText result = await textRecognizer.processImage(image);
+      _extractedText = result.text;
+      print(_extractedText);
+    } else {
+      return;
+    }
+    notifyListeners();
   }
 }
