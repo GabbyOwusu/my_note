@@ -29,8 +29,10 @@ dependencies:
   path_provider: ^1.6.18
   permission_handler: ^5.0.1+1
   provider: ^4.3.1
-  share: ^0.6.5+1
+  share: ^0.6.5+4
   speech_to_text: ^2.5.0
+  firebase_ml_vision: ^0.9.10
+  image_picker: ^0.6.7+17
 
 dev_dependencies:
   flutter_test:
