@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:image_picker/image_picker.dart';
 import 'package:my_note/services/FileContract.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -49,5 +50,15 @@ class FileService implements FileContract {
       print(e.toString());
       return 'Failed to read';
     }
+  }
+
+  @override
+  Future<PickedFile> getImage(ImageSource source) async {
+    ImagePicker picker = ImagePicker();
+    PickedFile picture = await picker.getImage(
+      source: source,
+      preferredCameraDevice: CameraDevice.rear,
+    );
+    return picture;
   }
 }
