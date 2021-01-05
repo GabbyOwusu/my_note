@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:my_note/providers/NotesProvider.dart';
+import 'package:my_note/widgets/getImage_button.dart';
+import 'package:provider/provider.dart';
 
 class Ocr extends StatefulWidget {
   @override
@@ -6,6 +10,10 @@ class Ocr extends StatefulWidget {
 }
 
 class _OcrState extends State<Ocr> {
+  NotesProvider get provider {
+    return Provider.of<NotesProvider>(context, listen: false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,42 +42,7 @@ class _OcrState extends State<Ocr> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              padding: EdgeInsets.all(10),
-              margin: EdgeInsets.all(20),
-              height: 300,
-              decoration: BoxDecoration(
-                color: Colors.grey.withOpacity(0.3),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: SingleChildScrollView(
-                child: Text(
-                  'Your extracted text will appear here',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 22,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-              ),
-            ),
             SizedBox(height: 10),
-            Padding(
-              padding: EdgeInsets.only(
-                left: 20,
-                right: 20,
-                top: 20,
-                bottom: 20,
-              ),
-              child: Text(
-                'Scan',
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 22,
-                  color: Theme.of(context).primaryColor,
-                ),
-              ),
-            ),
             Padding(
               padding: EdgeInsets.only(left: 20, right: 20, top: 20),
               child: Row(
@@ -108,6 +81,20 @@ class _OcrState extends State<Ocr> {
                 ],
               ),
             ),
+            SizedBox(height: 100),
+            Padding(
+              padding: EdgeInsets.only(left: 20, right: 20, top: 150),
+              child: SelectableText(
+                provider.extracted == ''
+                    ? 'Your extracted text will appear here....'
+                    : provider.extracted,
+                style: TextStyle(
+                  fontSize: 25,
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+            SizedBox(height: 150)
           ],
         ),
       ),
@@ -115,58 +102,27 @@ class _OcrState extends State<Ocr> {
         height: 120,
         child: Column(
           children: [
-            Container(
-              margin: EdgeInsets.only(left: 20, right: 20, bottom: 10),
-              height: 50,
-              decoration: BoxDecoration(
-                color: Colors.blue,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Scan',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 18,
-                    ),
-                  ),
-                  SizedBox(width: 10),
-                  Image.asset(
-                    'images/camera_icon.png',
-                    color: Colors.white,
-                    width: 20,
-                  ),
-                ],
-              ),
+            ImageButton(
+              ontapped: () {
+                provider.processImage(ImageSource.camera).then((_) {
+                  setState(() {});
+                });
+              },
+              title: 'Scan',
+              icon: Icons.camera,
+              textColor: Colors.white,
+              color: Colors.blue,
             ),
-            Container(
-              margin: EdgeInsets.only(left: 20, right: 20, bottom: 10),
-              height: 50,
-              decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.2),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Gallery',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.w600,
-                      fontSize: 18,
-                    ),
-                  ),
-                  SizedBox(width: 10),
-                  Icon(
-                    Icons.image,
-                    color: Colors.black,
-                  ),
-                ],
-              ),
+            ImageButton(
+              ontapped: () {
+                provider.processImage(ImageSource.gallery).then((_) {
+                  setState(() {});
+                });
+              },
+              title: 'Gallery',
+              icon: Icons.image,
+              textColor: Theme.of(context).primaryColor,
+              color: Colors.grey[300],
             ),
           ],
         ),
