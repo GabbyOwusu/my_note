@@ -5,7 +5,7 @@ A personal notes app for taking notes and making memos.
 ## Features
 
 - Speech-to-text
-- Ocr (in -progress)
+- Can read text from images
 
 ## Preview
 
