@@ -18,7 +18,7 @@ class Note {
   }
 
   static List<Note> fromJSONList(List<Map<String, dynamic>> json) {
-    final list = List<Note>();
+    final list = <Note>[];
     json.forEach((note) => list.add(Note.fromJSON(note)));
     return list;
   }
@@ -32,7 +32,7 @@ class Note {
   }
 
   static List<Map<String, dynamic>> toJSONList(List<Note> notes) {
-    final list = List<Map<String, dynamic>>();
+    final list = <Map<String, dynamic>>[];
     notes.forEach((note) => list.add(note.toJSON()));
     return list;
   }
