@@ -46,21 +46,23 @@ class NotesProvider extends BaseProvider {
   }
 
   Future<bool> saveToStorage() async {
-    final list = Note.toJSONList(_notesList);
-    print(jsonEncode(list));
-    return _storage.writeFile(jsonEncode(list));
+    try {
+      final list = Note.toJSONList(_notesList);
+      print(jsonEncode(list));
+      return _storage.writeFile(jsonEncode(list));
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   Future<void> readFromStorage() async {
     try {
-      final file = await _storage.getPath();
-      if (file != null) {
-        final json = await _storage.readFile();
-        if (json == null || json.isEmpty) return '';
-        final list = await jsonDecode(json).cast<Map<String, dynamic>>();
-        _notesList = Note.fromJSONList(list);
-        print('notelist here ........$_notesList');
-      }
+      final json = await _storage.readFile();
+      if (json == null || json.isEmpty) return '';
+      final list = await jsonDecode(json).cast<Map<String, dynamic>>();
+      _notesList = Note.fromJSONList(list);
+      print('notelist here ........$_notesList');
+
       notifyListeners();
     } catch (e) {
       print('Error here $e');
