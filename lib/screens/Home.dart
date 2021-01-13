@@ -17,11 +17,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Note note;
   bool isActive = true;
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
   NotesProvider get provider {
     return Provider.of<NotesProvider>(context);
   }
@@ -71,110 +66,103 @@ class _MyHomePageState extends State<MyHomePage> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
           child: provider.notes.isNotEmpty
-              ? FutureBuilder(
-                  future: provider.readFromStorage(),
-                  builder: (context, snapshot) {
-                    print(snapshot.data);
-                    return SingleChildScrollView(
-                      child: Column(
-                        children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: 20,
-                              right: 30,
-                              top: 20,
-                            ),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (context) {
-                                          return SearchPage();
-                                        }),
-                                      );
-                                    },
-                                    child: Container(
-                                      height: 45,
-                                      padding:
-                                          EdgeInsets.only(left: 20, right: 30),
-                                      decoration: BoxDecoration(
-                                        color: Theme.of(context)
-                                            .unselectedWidgetColor,
-                                        borderRadius: BorderRadius.circular(7),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          Icon(
-                                            Icons.search,
-                                            color: Colors.grey,
-                                            size: 15,
-                                          ),
-                                          SizedBox(width: 10),
-                                          Text(
-                                            'Search notes',
-                                            style: TextStyle(
-                                              fontSize: 17,
-                                              color: Colors.grey,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(width: 10),
-                                GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      isActive = !isActive;
-                                    });
-                                  },
-                                  child: Container(
-                                    height: 45,
-                                    width: 50,
-                                    decoration: BoxDecoration(
-                                      color: Theme.of(context)
-                                          .unselectedWidgetColor,
-                                      borderRadius: BorderRadius.circular(7),
-                                    ),
-                                    child: Center(
-                                      child: Icon(
-                                        isActive ? Icons.menu : Icons.grid_on,
-                                        color: Theme.of(context).primaryColor,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding:
-                                EdgeInsets.only(left: 20, right: 20, top: 10),
-                            child: StaggeredGridView.countBuilder(
-                                crossAxisCount: 2,
-                                mainAxisSpacing: 12,
-                                crossAxisSpacing: 12,
-                                shrinkWrap: true,
-                                physics: NeverScrollableScrollPhysics(),
-                                itemCount: provider.notes?.length,
-                                itemBuilder: (context, index) {
-                                  return HomeNoteItem(
-                                    note: provider.notes[index],
+              ? SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: 20,
+                          right: 30,
+                          top: 20,
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) {
+                                      return SearchPage();
+                                    }),
                                   );
                                 },
-                                staggeredTileBuilder: (int index) {
-                                  return StaggeredTile.fit(isActive ? 1 : 2);
-                                }),
-                          ),
-                        ],
+                                child: Container(
+                                  height: 45,
+                                  padding: EdgeInsets.only(left: 20, right: 30),
+                                  decoration: BoxDecoration(
+                                    color:
+                                        Theme.of(context).unselectedWidgetColor,
+                                    borderRadius: BorderRadius.circular(7),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.search,
+                                        color: Colors.grey,
+                                        size: 15,
+                                      ),
+                                      SizedBox(width: 10),
+                                      Text(
+                                        'Search notes',
+                                        style: TextStyle(
+                                          fontSize: 17,
+                                          color: Colors.grey,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  isActive = !isActive;
+                                });
+                              },
+                              child: Container(
+                                height: 45,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                  color:
+                                      Theme.of(context).unselectedWidgetColor,
+                                  borderRadius: BorderRadius.circular(7),
+                                ),
+                                child: Center(
+                                  child: Icon(
+                                    isActive ? Icons.menu : Icons.grid_on,
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                    );
-                  })
+                      SizedBox(height: 10),
+                      Padding(
+                        padding: EdgeInsets.only(left: 20, right: 20, top: 10),
+                        child: StaggeredGridView.countBuilder(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 12,
+                            crossAxisSpacing: 12,
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: provider.notes?.length,
+                            itemBuilder: (context, index) {
+                              return HomeNoteItem(
+                                note: provider.notes[index],
+                              );
+                            },
+                            staggeredTileBuilder: (int index) {
+                              return StaggeredTile.fit(isActive ? 1 : 2);
+                            }),
+                      ),
+                    ],
+                  ),
+                )
               : Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
