@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_note/models/Note.dart';
 import 'package:my_note/providers/NotesProvider.dart';
-// import 'package:my_note/screens/Home.dart';
 import 'package:my_note/screens/OCRScreen.dart';
 import 'package:my_note/screens/Speech_to_text.dart';
 import 'package:provider/provider.dart';
