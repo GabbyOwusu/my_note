@@ -7,25 +7,25 @@ import 'package:path_provider/path_provider.dart';
 class FileService implements FileContract {
   @override
   Future<String> getPath() async {
-    final directory = await getApplicationDocumentsDirectory();
-    final path = directory.path + '/usernotes.txt';
-    print('This is the path.......$path');
+    Directory directory = await getApplicationDocumentsDirectory();
+    String path = directory.path + '/mynotes.txt';
     return path;
   }
 
   @override
   Future<bool> writeFile(String data) async {
     try {
-      final path = await getPath();
-      File file = File(path);
+      String filepath = await getPath();
+      File file = File(filepath);
       if (!(await file.exists())) {
         await file.create();
+        return true;
+      } else {
+        await file.writeAsString(data);
       }
-      await file.writeAsString(data);
-      print('saved succesfully to .....$path');
       return true;
     } catch (e) {
-      print(e.toString());
+      print('Failed to save...$e');
       return false;
     }
   }
@@ -42,8 +42,8 @@ class FileService implements FileContract {
       }
       return file?.readAsString();
     } catch (e) {
-      print(e.toString());
-      return 'Failed to read';
+      print('Failed to read $e');
+      return '';
     }
   }
 
