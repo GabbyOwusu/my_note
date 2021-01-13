@@ -26,12 +26,22 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
+        centerTitle: false,
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Theme.of(context).primaryColor,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         automaticallyImplyLeading: false,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: Text(
           'Search',
           style: TextStyle(
-            fontSize: 25,
+            fontSize: 23,
             fontWeight: FontWeight.w600,
             color: Theme.of(context).primaryColor,
           ),
