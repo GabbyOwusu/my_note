@@ -10,21 +10,18 @@ import 'package:my_note/services/sl.dart';
 
 class NotesProvider extends BaseProvider {
   NotesProvider() {
-    if (_notesList == null) readFromStorage();
-    print('list of notes....$_notesList');
+    (_notesList == []) ?? readFromStorage();
   }
 
+  TextRecognizer textRecognizer = FirebaseVision.instance.textRecognizer();
   List<Note> _notesList = [];
   String _extractedText = '';
-  File _image;
-
   List<Note> get notes => _notesList;
   String get extracted => _extractedText;
+  File _image;
 
   Note note = Note();
   final _storage = sl.get<FileContract>();
-
-  TextRecognizer textRecognizer = FirebaseVision.instance.textRecognizer();
 
   void addNote(Note n) {
     _notesList.add(n);
@@ -45,13 +42,13 @@ class NotesProvider extends BaseProvider {
     saveToStorage();
   }
 
-  Future<bool> saveToStorage() async {
+  Future saveToStorage() async {
     try {
       final list = Note.toJSONList(_notesList);
       print(jsonEncode(list));
       return _storage.writeFile(jsonEncode(list));
     } catch (e) {
-      print(e.toString());
+      print('Failed to save $e');
     }
   }
 
@@ -61,8 +58,7 @@ class NotesProvider extends BaseProvider {
       if (json == null || json.isEmpty) return '';
       final list = await jsonDecode(json).cast<Map<String, dynamic>>();
       _notesList = Note.fromJSONList(list);
-      print('notelist here ........$_notesList');
-
+      print('notelist here $_notesList');
       notifyListeners();
     } catch (e) {
       print('Error here $e');
