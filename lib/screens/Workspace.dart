@@ -220,58 +220,64 @@ class _WorkSpaceState extends State<WorkSpace> {
               ),
             ),
             SizedBox(height: 50),
-          ],
-        ),
-      ),
-      bottomSheet: Container(
-        padding: const EdgeInsets.only(left: 20),
-        height: 50,
-        color: Theme.of(context).scaffoldBackgroundColor,
-        child: Row(
-          children: [
-            Text(
-              note.date == null
-                  ? 'Created at ${now.day}-${now.month}-${now.year} , ${now.hour}:${now.minute}'
-                  : 'Last Edited : ${note.date.day}/${note.date.month}/${note.date.year}  ${note.date.hour}:${note.date.minute}',
-              style: TextStyle(color: Colors.grey),
-            ),
-            Spacer(),
-            Padding(
-              padding: const EdgeInsets.only(right: 20),
-              child: IconButton(
-                icon: Image.asset(
-                  'images/camera_icon.png',
-                  width: 25,
-                  color: Theme.of(context).primaryColor,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => Ocr(),
+            Container(
+              padding: const EdgeInsets.only(left: 20),
+              height: 50,
+              color: Theme.of(context).scaffoldBackgroundColor,
+              child: Row(
+                children: [
+                  Text(
+                    note.date == null
+                        ? 'Created at ${now.day}-${now.month}-${now.year} , ${now.hour}:${now.minute}'
+                        : 'Last Edited : ${note.date.day}/${note.date.month}/${note.date.year}  ${note.date.hour}:${note.date.minute}',
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                  Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 20),
+                    child: IconButton(
+                      icon: Image.asset(
+                        'images/camera_icon.png',
+                        width: 25,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Ocr(),
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 20),
+                    child: IconButton(
+                      icon: Image.asset(
+                        'images/mic_icon.png',
+                        width: 18,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return SpeechScreen();
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  )
+                ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(right: 20),
-              child: IconButton(
-                icon: Image.asset(
-                  'images/mic_icon.png',
-                  width: 18,
-                  color: Theme.of(context).primaryColor,
-                ),
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return SpeechScreen();
-                  }));
-                },
-              ),
-            )
           ],
         ),
       ),
+      bottomSheet: Text(''),
     );
   }
 }
