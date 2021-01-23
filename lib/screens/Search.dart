@@ -52,8 +52,12 @@ class _SearchPageState extends State<SearchPage> {
         child: Column(
           children: [
             Padding(
-              padding:
-                  EdgeInsets.only(left: 20, right: 30, top: 25, bottom: 20),
+              padding: EdgeInsets.only(
+                left: 20,
+                right: 30,
+                top: 25,
+                bottom: 20,
+              ),
               child: TextField(
                 controller: controller,
                 onChanged: (text) async {
