@@ -23,6 +23,7 @@ class _WorkSpaceState extends State<WorkSpace> {
   Note note = Note();
   Note date;
   bool isChanged = false;
+  bool favorite = false;
 
   @override
   void initState() {
@@ -69,30 +70,28 @@ class _WorkSpaceState extends State<WorkSpace> {
 
   Future<bool> _showDialog() async {
     return await showDialog<bool>(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('Do you want to delete this note?'),
-            actions: [
-              FlatButton(
-                onPressed: () {
-                  Navigator.pop(context, false);
-                },
-                child: Text('No'),
-              ),
-              FlatButton(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                onPressed: () {
-                  provider.deleteNote(note);
-                  Navigator.pop(context, true);
-                },
-                child: Text('Delete'),
-              ),
-            ],
-          );
-        });
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Do you want to delete this note?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, false);
+              },
+              child: Text('No'),
+            ),
+            TextButton(
+              onPressed: () {
+                provider.deleteNote(note);
+                Navigator.pop(context, true);
+              },
+              child: Text('Delete'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -114,6 +113,40 @@ class _WorkSpaceState extends State<WorkSpace> {
           },
         ),
         actions: <Widget>[
+          if (favorite)
+            Padding(
+              padding: EdgeInsets.only(right: 10),
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    favorite = false;
+                  });
+                  provider.deleteFavorite(note);
+                },
+                child: Icon(
+                  Icons.bookmark,
+                  size: 30,
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+            )
+          else
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    favorite = true;
+                  });
+                  provider.favorite(note);
+                },
+                child: Icon(
+                  Icons.bookmark_border,
+                  size: 30,
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+            ),
           Tooltip(
             message: 'Delete',
             child: IconButton(
@@ -219,65 +252,71 @@ class _WorkSpaceState extends State<WorkSpace> {
                 enabledBorder: InputBorder.none,
               ),
             ),
-            SizedBox(height: 50),
-            Container(
-              padding: const EdgeInsets.only(left: 20),
-              height: 50,
-              color: Theme.of(context).scaffoldBackgroundColor,
-              child: Row(
-                children: [
-                  Text(
-                    note.date == null
-                        ? 'Created at ${now.day}-${now.month}-${now.year} , ${now.hour}:${now.minute}'
-                        : 'Last Edited : ${note.date.day}/${note.date.month}/${note.date.year}  ${note.date.hour}:${note.date.minute}',
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                  Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 20),
-                    child: IconButton(
-                      icon: Image.asset(
-                        'images/camera_icon.png',
-                        width: 25,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => Ocr(),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 20),
-                    child: IconButton(
-                      icon: Image.asset(
-                        'images/mic_icon.png',
-                        width: 18,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return SpeechScreen();
-                            },
-                          ),
-                        );
-                      },
-                    ),
-                  )
-                ],
+            SizedBox(height: 80),
+            Align(
+              alignment: Alignment.bottomLeft,
+              child: Padding(
+                padding: EdgeInsets.only(left: 30),
+                child: Text(
+                  note.date == null
+                      ? 'Created at ${now.day}-${now.month}-${now.year} , ${now.hour}:${now.minute}'
+                      : 'Last Edited : ${note.date.day}/${note.date.month}/${note.date.year}  ${note.date.hour}:${note.date.minute}',
+                  style: TextStyle(color: Colors.grey),
+                ),
               ),
             ),
+            SizedBox(height: 30),
           ],
         ),
       ),
-      bottomSheet: Text(''),
+      bottomSheet: Container(
+        padding: const EdgeInsets.only(left: 20),
+        height: 50,
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: Row(
+          children: [
+            Spacer(),
+            Padding(
+              padding: const EdgeInsets.only(right: 20),
+              child: IconButton(
+                icon: Image.asset(
+                  'images/camera_icon.png',
+                  width: 25,
+                  color: Theme.of(context).primaryColor,
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Ocr(),
+                    ),
+                  );
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 20),
+              child: IconButton(
+                icon: Image.asset(
+                  'images/mic_icon.png',
+                  width: 18,
+                  color: Theme.of(context).primaryColor,
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return SpeechScreen();
+                      },
+                    ),
+                  );
+                },
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
