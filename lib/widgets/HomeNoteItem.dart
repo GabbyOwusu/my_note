@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:my_note/models/Note.dart';
 import 'package:my_note/screens/Workspace.dart';
 import 'package:my_note/widgets/Options.dart';
-// import 'package:note/widgets/BottomSheet.dart';
-// import 'package:note/models/Note.dart';
-// import 'package:note/screens/Workspace.dart';
 
 class HomeNoteItem extends StatefulWidget {
   final Note note;
