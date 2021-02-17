@@ -18,11 +18,13 @@ class NotesProvider extends BaseProvider {
   List<Note> _notesList = [];
   List<Note> _favorites = [];
   String _extractedText = '';
+  bool _checkLocked = false;
   File _image;
 
   List<Note> get favs => _favorites;
   List<Note> get notes => _notesList;
   String get extracted => _extractedText;
+  bool get islocked => _checkLocked;
 
   final _storage = sl.get<FileContract>();
 
@@ -32,8 +34,14 @@ class NotesProvider extends BaseProvider {
     saveToStorage();
   }
 
+  void lock() {
+    _checkLocked = true;
+    notifyListeners();
+  }
+
   void favorite(Note n) {
     _favorites.add(n);
+    print('${n.title}, ${n.pin}');
     print('added to favorites');
     notifyListeners();
   }
