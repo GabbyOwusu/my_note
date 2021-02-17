@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_note/models/Note.dart';
 import 'package:my_note/providers/NotesProvider.dart';
+import 'package:my_note/screens/SetLock.dart';
 import 'package:my_note/screens/OCRScreen.dart';
 import 'package:my_note/screens/Speech_to_text.dart';
 import 'package:provider/provider.dart';
@@ -113,45 +114,47 @@ class _WorkSpaceState extends State<WorkSpace> {
           },
         ),
         actions: <Widget>[
-          if (favorite)
-            Padding(
-              padding: EdgeInsets.only(right: 10),
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    favorite = false;
-                  });
-                  provider.deleteFavorite(note);
-                },
-                child: Icon(
-                  Icons.bookmark,
-                  size: 30,
-                  color: Theme.of(context).primaryColor,
+          favorite == true
+              ? Padding(
+                  padding: EdgeInsets.only(right: 10),
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        favorite = true;
+                      });
+                      provider.favorite(note);
+                    },
+                    child: Icon(
+                      Icons.bookmark,
+                      size: 30,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                )
+              : Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        favorite = false;
+                      });
+                      provider.deleteFavorite(note);
+                    },
+                    child: Icon(
+                      Icons.bookmark_border,
+                      size: 30,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
                 ),
-              ),
-            )
-          else
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    favorite = true;
-                  });
-                  provider.favorite(note);
-                },
-                child: Icon(
-                  Icons.bookmark_border,
-                  size: 30,
-                  color: Theme.of(context).primaryColor,
-                ),
-              ),
-            ),
           Tooltip(
             message: 'Delete',
             child: IconButton(
                 disabledColor: Colors.grey,
-                icon: Icon(CupertinoIcons.delete_solid),
+                icon: Icon(
+                  CupertinoIcons.delete_solid,
+                  size: 25,
+                ),
                 color: Theme.of(context).primaryColor,
                 onPressed: () async {
                   if (note.title.isNotEmpty || note.text.isNotEmpty) {
@@ -202,8 +205,10 @@ class _WorkSpaceState extends State<WorkSpace> {
         ],
       ),
       body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Column(
           children: <Widget>[
+            SizedBox(height: 10),
             TextField(
               onChanged: (val) {
                 isChanged = !isChanged;
@@ -252,11 +257,11 @@ class _WorkSpaceState extends State<WorkSpace> {
                 enabledBorder: InputBorder.none,
               ),
             ),
-            SizedBox(height: 80),
+            SizedBox(height: 10),
             Align(
               alignment: Alignment.bottomLeft,
               child: Padding(
-                padding: EdgeInsets.only(left: 30),
+                padding: EdgeInsets.only(left: 20),
                 child: Text(
                   note.date == null
                       ? 'Created at ${now.day}-${now.month}-${now.year} , ${now.hour}:${now.minute}'
@@ -289,6 +294,25 @@ class _WorkSpaceState extends State<WorkSpace> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => Ocr(),
+                    ),
+                  );
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 20),
+              child: IconButton(
+                icon: Icon(
+                  Icons.lock,
+                  color: Theme.of(context).primaryColor,
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SetLock(
+                        note: note,
+                      ),
                     ),
                   );
                 },
