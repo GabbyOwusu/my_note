@@ -14,19 +14,34 @@ class NotesProvider extends BaseProvider {
   }
 
   TextRecognizer textRecognizer = FirebaseVision.instance.textRecognizer();
+  Note note = Note();
   List<Note> _notesList = [];
+  List<Note> _favorites = [];
   String _extractedText = '';
-  List<Note> get notes => _notesList;
-  String get extracted => _extractedText;
   File _image;
 
-  Note note = Note();
+  List<Note> get favs => _favorites;
+  List<Note> get notes => _notesList;
+  String get extracted => _extractedText;
+
   final _storage = sl.get<FileContract>();
 
   void addNote(Note n) {
     _notesList.add(n);
     notifyListeners();
     saveToStorage();
+  }
+
+  void favorite(Note n) {
+    _favorites.add(n);
+    print('added to favorites');
+    notifyListeners();
+  }
+
+  void deleteFavorite(Note n) {
+    _favorites.remove(n);
+    print('remove from favorites');
+    notifyListeners();
   }
 
   void deleteNote(Note n) {
@@ -85,6 +100,7 @@ class NotesProvider extends BaseProvider {
     } else {
       return;
     }
+
     notifyListeners();
   }
 }
