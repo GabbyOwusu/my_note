@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:my_note/models/Note.dart';
+import 'package:my_note/providers/NotesProvider.dart';
+import 'package:my_note/screens/LockScreen.dart';
 import 'package:my_note/screens/Workspace.dart';
 import 'package:my_note/widgets/Options.dart';
+import 'package:provider/provider.dart';
 
 class HomeNoteItem extends StatefulWidget {
   final Note note;
@@ -13,6 +16,11 @@ class HomeNoteItem extends StatefulWidget {
 }
 
 class _HomeNoteItemState extends State<HomeNoteItem> {
+  DateTime now = DateTime.now();
+  NotesProvider get provider {
+    return Provider.of(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -28,13 +36,15 @@ class _HomeNoteItemState extends State<HomeNoteItem> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => WorkSpace(existingNote: widget.note),
+            builder: (context) => widget.note.pin == null
+                ? WorkSpace(existingNote: widget.note)
+                : LockScreen(),
           ),
         );
       },
       child: AnimatedContainer(
         duration: Duration(milliseconds: 1500),
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.all(9),
         decoration: BoxDecoration(
           color: Theme.of(context).unselectedWidgetColor.withOpacity(0.3),
           border: Border.all(color: Theme.of(context).disabledColor),
@@ -60,6 +70,16 @@ class _HomeNoteItemState extends State<HomeNoteItem> {
                 color: Theme.of(context).primaryColor,
                 height: 1.3,
                 fontSize: 13,
+              ),
+            ),
+            SizedBox(height: 20),
+            Text(
+              widget.note.date == now
+                  ? 'Created at ${now.day}-${now.month}-${now.year} , ${now.hour}:${now.minute}'
+                  : 'Last Edited : ${widget.note.date.day}/${widget.note.date.month}/${widget.note.date.year}  ${widget.note.date.hour}:${widget.note.date.minute}',
+              style: TextStyle(
+                color: Colors.grey,
+                fontSize: 11,
               ),
             ),
           ],
