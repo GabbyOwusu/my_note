@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:my_note/models/Note.dart';
 import 'package:my_note/providers/NotesProvider.dart';
+import 'package:my_note/screens/Favorites.dart';
 import 'package:my_note/screens/Search.dart';
 import 'package:my_note/screens/Workspace.dart';
 import 'package:my_note/widgets/HomeNoteItem.dart';
@@ -21,13 +22,81 @@ class _MyHomePageState extends State<MyHomePage> {
     return Provider.of<NotesProvider>(context);
   }
 
+  final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _key,
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            DrawerHeader(
+              child: Text('Username'),
+            ),
+            ListTile(
+              leading: Text(
+                'Settings',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              trailing: Icon(
+                Icons.settings,
+                color: Colors.black,
+              ),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: Text(
+                'Settings',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              trailing: Icon(
+                Icons.settings,
+                color: Colors.black,
+              ),
+              onTap: () {},
+            ),
+            Divider(),
+            Container(
+              alignment: Alignment.bottomCenter,
+              child: ListTile(
+                leading: Text(
+                  'Sign in with Google',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                trailing: Icon(
+                  Icons.link,
+                  color: Colors.black,
+                ),
+                onTap: () {},
+              ),
+            )
+          ],
+        ),
+      ),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
+        centerTitle: false,
+        leading: IconButton(
+          onPressed: () {
+            _key.currentState.openDrawer();
+          },
+          icon: Icon(
+            Icons.menu,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
         title: Text.rich(
           TextSpan(
             text: "My",
@@ -53,14 +122,30 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(top: 20, right: 20),
+            padding: const EdgeInsets.only(top: 16, right: 20),
             child: Text(
               '${provider.notes?.length ?? 0} notes',
               style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
                 color: Theme.of(context).primaryColor,
               ),
             ),
-          )
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 20),
+            child: IconButton(
+                icon: Icon(
+                  Icons.bookmark,
+                  color: Theme.of(context).primaryColor,
+                  size: 30,
+                ),
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (_) {
+                    return Favorites();
+                  }));
+                }),
+          ),
         ],
       ),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
