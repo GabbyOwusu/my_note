@@ -113,7 +113,8 @@ class _WorkSpaceState extends State<WorkSpace> {
             ),
             TextButton(
               onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) {
                   return SetLock(note: note);
                 }));
               },
@@ -128,8 +129,10 @@ class _WorkSpaceState extends State<WorkSpace> {
   void snackBar() {
     _scaffoldKey.currentState.showSnackBar(
       SnackBar(
-        content:
-            Text(favorite ? 'Removed to favorites' : 'Added From Favorites'),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        content: Text(
+          favorite ? 'Removed to favorites' : 'Added to Favorites',
+        ),
       ),
     );
   }
