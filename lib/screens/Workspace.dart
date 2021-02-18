@@ -16,15 +16,17 @@ class WorkSpace extends StatefulWidget {
 }
 
 class _WorkSpaceState extends State<WorkSpace> {
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   DateTime now = DateTime.now();
+  Note note = Note();
+  Note date;
+
+  bool isChanged = false;
+  bool favorite = true;
   bool isBold = false;
   bool isItalic = false;
   bool isUnderlined = false;
   bool isRecording = false;
-  Note note = Note();
-  Note date;
-  bool isChanged = false;
-  bool favorite = false;
 
   @override
   void initState() {
@@ -95,9 +97,48 @@ class _WorkSpaceState extends State<WorkSpace> {
     );
   }
 
+  Future<bool> resetLock() async {
+    return await showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Do you want to reset lock?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                setState(() => note.pin = '');
+                Navigator.pop(context);
+              },
+              child: Text('Remove lock'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return SetLock(note: note);
+                }));
+              },
+              child: Text('Change pin'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void snackBar() {
+    _scaffoldKey.currentState.showSnackBar(
+      SnackBar(
+        content:
+            Text(favorite ? 'Removed to favorites' : 'Added From Favorites'),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    context.watch<NotesProvider>().notes;
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         centerTitle: false,
@@ -116,16 +157,18 @@ class _WorkSpaceState extends State<WorkSpace> {
         actions: <Widget>[
           favorite == true
               ? Padding(
-                  padding: EdgeInsets.only(right: 10),
-                  child: GestureDetector(
-                    onTap: () {
+                  padding: EdgeInsets.all(8),
+                  child: IconButton(
+                    onPressed: () {
                       setState(() {
-                        favorite = true;
+                        favorite = false;
+                        provider.favorite(note);
                       });
-                      provider.favorite(note);
+
+                      snackBar();
                     },
-                    child: Icon(
-                      Icons.bookmark,
+                    icon: Icon(
+                      Icons.bookmark_border,
                       size: 30,
                       color: Theme.of(context).primaryColor,
                     ),
@@ -133,15 +176,16 @@ class _WorkSpaceState extends State<WorkSpace> {
                 )
               : Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: GestureDetector(
-                    onTap: () {
+                  child: IconButton(
+                    onPressed: () {
                       setState(() {
-                        favorite = false;
+                        favorite = true;
                       });
                       provider.deleteFavorite(note);
+                      snackBar();
                     },
-                    child: Icon(
-                      Icons.bookmark_border,
+                    icon: Icon(
+                      Icons.bookmark,
                       size: 30,
                       color: Theme.of(context).primaryColor,
                     ),
@@ -302,25 +346,6 @@ class _WorkSpaceState extends State<WorkSpace> {
             Padding(
               padding: const EdgeInsets.only(right: 20),
               child: IconButton(
-                icon: Icon(
-                  Icons.lock,
-                  color: Theme.of(context).primaryColor,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => SetLock(
-                        note: note,
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 20),
-              child: IconButton(
                 icon: Image.asset(
                   'images/mic_icon.png',
                   width: 18,
@@ -337,7 +362,36 @@ class _WorkSpaceState extends State<WorkSpace> {
                   );
                 },
               ),
-            )
+            ),
+            if (note.pin == '')
+              Padding(
+                padding: const EdgeInsets.only(right: 20),
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SetLock(note: note),
+                      ),
+                    );
+                  },
+                  icon: Icon(
+                    Icons.lock_open,
+                    color: Colors.grey,
+                  ),
+                ),
+              )
+            else
+              Padding(
+                padding: const EdgeInsets.only(right: 20),
+                child: IconButton(
+                  icon: Icon(
+                    Icons.lock,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  onPressed: resetLock,
+                ),
+              ),
           ],
         ),
       ),
