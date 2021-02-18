@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:my_note/models/Note.dart';
-import 'package:my_note/providers/NotesProvider.dart';
-import 'package:provider/provider.dart';
 
 class SetLock extends StatefulWidget {
   final Note note;
@@ -14,10 +12,6 @@ class SetLock extends StatefulWidget {
 
 class _SetLockState extends State<SetLock> {
   TextEditingController pin = TextEditingController();
-
-  NotesProvider get provider {
-    return Provider.of(context);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +45,9 @@ class _SetLockState extends State<SetLock> {
               TextFormField(
                 controller: pin,
                 keyboardType: TextInputType.number,
-                onChanged: (text) {},
+                onChanged: (text) {
+                  setState(() {});
+                },
                 maxLength: 4,
                 inputFormatters: [
                   LengthLimitingTextInputFormatter(4),
@@ -97,18 +93,22 @@ class _SetLockState extends State<SetLock> {
       ),
       bottomSheet: GestureDetector(
         onTap: () {
-          setState(() {
-            widget.note.pin = pin.text;
-          });
-          print(widget.note.pin);
-          Navigator.pop(context);
+          if (pin.text.length == 4) {
+            setState(() {
+              widget.note.pin = pin.text;
+            });
+            print(widget.note.pin);
+            Navigator.pop(context);
+          } else {
+            return;
+          }
         },
         child: Container(
           height: 80,
           child: Container(
             margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
             decoration: BoxDecoration(
-              color: Colors.black,
+              color: pin.text.length == 4 ? Colors.black : Colors.grey,
               borderRadius: BorderRadius.circular(10),
             ),
             child: Center(
