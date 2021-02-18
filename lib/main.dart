@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:my_note/providers/NotesProvider.dart';
+import 'package:my_note/screens/Home.dart';
+import 'package:my_note/screens/LockScreen.dart';
 import 'package:my_note/screens/Splash.dart';
+import 'package:my_note/screens/Workspace.dart';
 import 'package:my_note/services/sl.dart';
 import 'package:provider/provider.dart';
 
@@ -42,6 +45,11 @@ class MyApp extends StatelessWidget {
           disabledColor: Colors.grey.shade300,
         ),
         home: Splash(),
+        routes: {
+          '/home': (BuildContext context) => MyHomePage(),
+          '/lockscreen': (BuildContext context) => LockScreen(),
+          '/workspace': (BuildContext context) => WorkSpace(),
+        },
       ),
     );
   }
