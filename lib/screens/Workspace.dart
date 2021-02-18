@@ -367,13 +367,14 @@ class _WorkSpaceState extends State<WorkSpace> {
               Padding(
                 padding: const EdgeInsets.only(right: 20),
                 child: IconButton(
-                  onPressed: () {
-                    Navigator.push(
+                  onPressed: () async {
+                    await Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => SetLock(note: note),
                       ),
                     );
+                    setState(() {});
                   },
                   icon: Icon(
                     Icons.lock_open,
