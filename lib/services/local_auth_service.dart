@@ -11,10 +11,13 @@ class LocalAuthService {
       try {
         if (availableBiometrics.contains(BiometricType.fingerprint)) {
           auth.authenticateWithBiometrics(
-            localizedReason: 'Use biometrics to unlock note',
-            useErrorDialogs: true,
-            stickyAuth: true,
-          );
+              localizedReason: 'Use biometrics to unlock note',
+              useErrorDialogs: true,
+              stickyAuth: true,
+              sensitiveTransaction: true
+              // androidAuthStrings: AndroidAuthMessages(),
+
+              );
         }
       } catch (e) {
         print('Authentication failed because $e');
