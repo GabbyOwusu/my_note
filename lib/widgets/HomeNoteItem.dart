@@ -32,8 +32,8 @@ class _HomeNoteItemState extends State<HomeNoteItem> {
               return Options(note: widget.note);
             });
       },
-      onTap: () {
-        Navigator.push(
+      onTap: () async {
+        await Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => widget.note.pin == ''
@@ -41,6 +41,7 @@ class _HomeNoteItemState extends State<HomeNoteItem> {
                 : LockScreen(note: widget.note),
           ),
         );
+        setState(() {});
       },
       child: AnimatedContainer(
         duration: Duration(milliseconds: 1500),
