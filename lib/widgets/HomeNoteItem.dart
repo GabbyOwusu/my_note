@@ -36,9 +36,9 @@ class _HomeNoteItemState extends State<HomeNoteItem> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => widget.note.pin == null
+            builder: (context) => widget.note.pin == ''
                 ? WorkSpace(existingNote: widget.note)
-                : LockScreen(),
+                : LockScreen(note: widget.note),
           ),
         );
       },
@@ -62,16 +62,18 @@ class _HomeNoteItemState extends State<HomeNoteItem> {
               ),
             ),
             SizedBox(height: 10),
-            Text(
-              widget.note.text ?? '',
-              overflow: TextOverflow.ellipsis,
-              maxLines: 13,
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-                height: 1.3,
-                fontSize: 13,
-              ),
-            ),
+            widget.note.pin == ''
+                ? Text(
+                    widget.note.text ?? '',
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 13,
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      height: 1.3,
+                      fontSize: 13,
+                    ),
+                  )
+                : Icon(Icons.lock),
             SizedBox(height: 20),
             Text(
               widget.note.date == now
