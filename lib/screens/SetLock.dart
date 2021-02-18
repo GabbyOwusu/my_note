@@ -75,7 +75,7 @@ class _SetLockState extends State<SetLock> {
                     borderSide: BorderSide(width: 1, color: Colors.grey),
                   ),
                   filled: true,
-                  fillColor: Colors.white,
+                  fillColor: Colors.white.withOpacity(0.1),
                   border: OutlineInputBorder(
                     borderSide: BorderSide(),
                     borderRadius: BorderRadius.circular(10),
@@ -105,10 +105,13 @@ class _SetLockState extends State<SetLock> {
         },
         child: Container(
           height: 80,
+          color: Theme.of(context).scaffoldBackgroundColor,
           child: Container(
             margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
             decoration: BoxDecoration(
-              color: pin.text.length == 4 ? Colors.black : Colors.grey,
+              color: pin.text.length == 4
+                  ? Theme.of(context).primaryColor
+                  : Colors.grey,
               borderRadius: BorderRadius.circular(10),
             ),
             child: Center(
