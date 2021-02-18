@@ -16,19 +16,24 @@ class _LockScreenState extends State<LockScreen> {
   TextEditingController pinCode = TextEditingController();
   LocalAuthService authService = LocalAuthService();
 
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
-    // authService.runBoimetric().then((value) {
-    //   Navigator.push(context, MaterialPageRoute(builder: (context) {
-    //     return WorkSpace(existingNote: widget.note);
-    //   }));
-    // });
+    authService.runBoimetric();
     super.initState();
+  }
+
+  void launchSnackbar() {
+    _scaffoldKey.currentState.showSnackBar(
+      SnackBar(content: Text('Wrong pinCode.')),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leading: IconButton(
@@ -61,7 +66,9 @@ class _LockScreenState extends State<LockScreen> {
                 controller: pinCode,
                 keyboardType: TextInputType.number,
                 autofocus: true,
-                onChanged: (text) {},
+                onChanged: (text) {
+                  setState(() {});
+                },
                 maxLength: 4,
                 inputFormatters: [
                   LengthLimitingTextInputFormatter(4),
@@ -136,10 +143,16 @@ class _LockScreenState extends State<LockScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return WorkSpace(existingNote: widget.note);
-          }));
+        backgroundColor: pinCode.text.length != 4 ? Colors.grey : Colors.purple,
+        onPressed: () async {
+          if (pinCode.text == widget.note.pin) {
+            await Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) {
+              return WorkSpace(existingNote: widget.note);
+            }));
+          } else {
+            launchSnackbar();
+          }
         },
         child: Icon(Icons.arrow_forward),
       ),
