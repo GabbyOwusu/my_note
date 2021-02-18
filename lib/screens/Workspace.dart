@@ -34,39 +34,6 @@ class _WorkSpaceState extends State<WorkSpace> {
     super.initState();
   }
 
-  // prompt() {
-  //   return showDialog(
-  //     context: context,
-  //     builder: (context) {
-  //       return AlertDialog(
-  //         title: Text('Exit without saving?'),
-  //         actions: [
-  //           FlatButton(
-  //             onPressed: () {
-  //               Navigator.pop(context);
-  //             },
-  //             child: Text('No'),
-  //           ),
-  //           FlatButton(
-  //             shape: RoundedRectangleBorder(
-  //               borderRadius: BorderRadius.circular(8),
-  //             ),
-  //             onPressed: () {
-  //               Navigator.pushReplacement(
-  //                 context,
-  //                 MaterialPageRoute(
-  //                   builder: (context) => MyHomePage(),
-  //                 ),
-  //               );
-  //             },
-  //             child: Text('Yes'),
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
-
   NotesProvider get provider {
     return Provider.of<NotesProvider>(context, listen: false);
   }
