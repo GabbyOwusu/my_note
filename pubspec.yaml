@@ -33,8 +33,8 @@ dependencies:
   speech_to_text: ^2.5.0
   firebase_ml_vision: ^0.9.10
   image_picker: ^0.6.7+17
-  local_auth: ^0.6.3+4
-  vibration: ^1.7.3
+  local_auth: ^0.6.3+4 
+  
 
 dev_dependencies:
   flutter_test:
