@@ -34,11 +34,6 @@ class NotesProvider extends BaseProvider {
     saveToStorage();
   }
 
-  void lock() {
-    _checkLocked = true;
-    notifyListeners();
-  }
-
   void favorite(Note n) {
     _favorites.add(n);
     print('${n.title}, ${n.pin}');
