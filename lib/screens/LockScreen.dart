@@ -96,7 +96,7 @@ class _LockScreenState extends State<LockScreen> {
                     borderSide: BorderSide(width: 1, color: Colors.grey),
                   ),
                   filled: true,
-                  fillColor: Colors.white,
+                  fillColor: Colors.white.withOpacity(0.1),
                   border: OutlineInputBorder(
                     borderSide: BorderSide(),
                     borderRadius: BorderRadius.circular(10),
