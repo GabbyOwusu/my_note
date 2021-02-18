@@ -16,7 +16,6 @@ class LocalAuthService {
               stickyAuth: true,
               sensitiveTransaction: true
               // androidAuthStrings: AndroidAuthMessages(),
-
               );
         }
       } catch (e) {
