@@ -33,17 +33,17 @@ class MyApp extends StatelessWidget {
           disabledColor: Color.fromRGBO(182, 182, 182, 50),
           brightness: Brightness.light,
         ),
-        // theme: ThemeData(
-        //   brightness: Brightness.light,
-        //   floatingActionButtonTheme: FloatingActionButtonThemeData(
-        //     backgroundColor: Colors.purple,
-        //   ),
-        //   scaffoldBackgroundColor: Colors.white,
-        //   primaryColor: Colors.black,
-        //   unselectedWidgetColor: Color.fromRGBO(235, 235, 235, 6),
-        //   buttonColor: Colors.lightBlueAccent,
-        //   disabledColor: Colors.grey.shade300,
-        // ),
+        darkTheme: ThemeData(
+          brightness: Brightness.light,
+          floatingActionButtonTheme: FloatingActionButtonThemeData(
+            backgroundColor: Colors.purple,
+          ),
+          scaffoldBackgroundColor: Colors.white,
+          primaryColor: Colors.black,
+          unselectedWidgetColor: Color.fromRGBO(235, 235, 235, 6),
+          buttonColor: Colors.lightBlueAccent,
+          disabledColor: Colors.grey.shade300,
+        ),
         home: Splash(),
         routes: {
           '/home': (BuildContext context) => MyHomePage(),
