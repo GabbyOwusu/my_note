@@ -29,6 +29,7 @@ class NotesProvider extends BaseProvider {
   final _storage = sl.get<FileContract>();
 
   void addNote(Note n) {
+    if (n.title.isEmpty && n.text.isEmpty) return;
     _notesList.add(n);
     notifyListeners();
     saveToStorage();
