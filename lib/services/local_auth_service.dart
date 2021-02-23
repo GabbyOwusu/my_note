@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:local_auth/local_auth.dart';
 
 class LocalAuthService {
@@ -7,21 +6,17 @@ class LocalAuthService {
   Future runBoimetric() async {
     List<BiometricType> availableBiometrics =
         await auth.getAvailableBiometrics();
-    if (Platform.isAndroid) {
-      try {
-        if (availableBiometrics.contains(BiometricType.fingerprint)) {
-          auth.authenticateWithBiometrics(
-              localizedReason: 'Use biometrics to unlock note',
-              useErrorDialogs: true,
-              stickyAuth: true,
-              sensitiveTransaction: true
-              // androidAuthStrings: AndroidAuthMessages(),
-              );
-        }
-      } catch (e) {
-        print('Authentication failed because $e');
+    try {
+      if (availableBiometrics.contains(BiometricType.fingerprint)) {
+        return auth.authenticateWithBiometrics(
+          localizedReason: 'Use biometrics to unlock note',
+          useErrorDialogs: true,
+          stickyAuth: true,
+          sensitiveTransaction: true,
+        );
       }
+    } catch (e) {
+      print('Authentication failed because $e');
     }
-    if (Platform.isIOS) {}
   }
 }
