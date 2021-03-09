@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'MyNote',
-        theme: ThemeData.dark().copyWith(
+        darkTheme: ThemeData.dark().copyWith(
           scaffoldBackgroundColor: Colors.black,
           primaryColor: Colors.white,
           buttonColor: Color.fromRGBO(112, 237, 238, 5),
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
           disabledColor: Color.fromRGBO(182, 182, 182, 50),
           brightness: Brightness.light,
         ),
-        darkTheme: ThemeData(
+        theme: ThemeData(
           brightness: Brightness.light,
           floatingActionButtonTheme: FloatingActionButtonThemeData(
             backgroundColor: Colors.purple,
