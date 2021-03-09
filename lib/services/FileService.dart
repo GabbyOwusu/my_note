@@ -33,13 +33,10 @@ class FileService implements FileContract {
       final path = await getPath();
       File file = File(path);
 
-      if (!(await file.exists())) {
-        print('File does not exist');
-        return '';
-      }
+      final result = await file?.readAsString();
 
-      return file?.readAsString();
-    } catch (e) {
+      return result;
+    } on FileSystemException catch (e) {
       print('Failed to read $e');
       return '';
     }
