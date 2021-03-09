@@ -17,12 +17,9 @@ class FileService implements FileContract {
     try {
       String filepath = await getPath();
       File file = File(filepath);
-      if (!(await file.exists())) {
-        await file.create();
-        return true;
-      } else {
-        await file.writeAsString(data);
-      }
+
+      await file.writeAsString(data);
+
       return true;
     } catch (e) {
       print('Failed to save...$e');
@@ -35,11 +32,12 @@ class FileService implements FileContract {
     try {
       final path = await getPath();
       File file = File(path);
-      if (await file?.exists()) {
-        await file.writeAsString('');
-      } else {
-        file.createSync();
+
+      if (!(await file.exists())) {
+        print('File does not exist');
+        return '';
       }
+
       return file?.readAsString();
     } catch (e) {
       print('Failed to read $e');
