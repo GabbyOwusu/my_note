@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:my_note/models/Note.dart';
-import 'package:my_note/screens/Workspace.dart';
+import 'package:my_note/screens/Editor.dart';
 import 'package:my_note/services/local_auth_service.dart';
 
 class LockScreen extends StatefulWidget {
@@ -22,12 +22,6 @@ class _LockScreenState extends State<LockScreen> {
   void initState() {
     authService.runBoimetric();
     super.initState();
-  }
-
-  void launchSnackbar() {
-    _scaffoldKey.currentState.showSnackBar(
-      SnackBar(content: Text('Wrong pinCode.')),
-    );
   }
 
   @override
@@ -57,58 +51,6 @@ class _LockScreenState extends State<LockScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                'Enter pin code to unlock note',
-                style: TextStyle(color: Colors.grey),
-              ),
-              SizedBox(height: 30),
-              TextFormField(
-                controller: pinCode,
-                keyboardType: TextInputType.number,
-                autofocus: true,
-                onChanged: (text) {
-                  setState(() {});
-                },
-                maxLength: 4,
-                inputFormatters: [
-                  LengthLimitingTextInputFormatter(4),
-                ],
-                maxLines: 1,
-                maxLengthEnforced: true,
-                buildCounter: (context, {currentLength, maxLength, isFocused}) {
-                  return Container(
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      currentLength.toString() + "/" + maxLength.toString(),
-                      style: TextStyle(fontWeight: FontWeight.w500),
-                    ),
-                  );
-                },
-                decoration: InputDecoration(
-                  isDense: true,
-                  contentPadding: EdgeInsets.all(15),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(width: 1, color: Colors.black),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide(width: 1, color: Colors.grey),
-                  ),
-                  filled: true,
-                  fillColor: Colors.white.withOpacity(0.1),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  hintText: 'Pin',
-                  hintStyle: TextStyle(
-                    fontSize: 17,
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
-              SizedBox(height: 50),
               Align(
                 alignment: Alignment.center,
                 child: Text(
@@ -145,14 +87,10 @@ class _LockScreenState extends State<LockScreen> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: pinCode.text.length != 4 ? Colors.grey : Colors.purple,
         onPressed: () async {
-          if (pinCode.text == widget.note.pin) {
-            await Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) {
-              return WorkSpace(existingNote: widget.note);
-            }));
-          } else {
-            launchSnackbar();
-          }
+          await Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) {
+            return WorkSpace(existingNote: widget.note);
+          }));
         },
         child: Icon(Icons.arrow_forward),
       ),
