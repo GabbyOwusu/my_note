@@ -9,9 +9,9 @@ import 'package:my_note/services/FileContract.dart';
 import 'package:my_note/services/sl.dart';
 
 class NotesProvider extends BaseProvider {
-  NotesProvider() {
-    (_notesList == []) ?? readFromStorage();
-  }
+  // NotesProvider() {
+  //   (_notesList == []) ?? readFromStorage();
+  // }
 
   TextRecognizer textRecognizer = FirebaseVision.instance.textRecognizer();
   Note note = Note();
@@ -21,8 +21,8 @@ class NotesProvider extends BaseProvider {
   bool _checkLocked = false;
   File _image;
 
-  List<Note> get favs => _favorites;
-  List<Note> get notes => _notesList;
+  List<Note> get favs => _favorites.reversed.toList();
+  List<Note> get notes => _notesList.reversed.toList();
   String get extracted => _extractedText;
   bool get islocked => _checkLocked;
 
@@ -37,13 +37,14 @@ class NotesProvider extends BaseProvider {
 
   void favorite(Note n) {
     _favorites.add(n);
-    print('${n.title}, ${n.pin}');
+    n.isFavorite = true;
     print('added to favorites');
     notifyListeners();
   }
 
   void deleteFavorite(Note n) {
     _favorites.remove(n);
+    n.isFavorite = false;
     print('remove from favorites');
     notifyListeners();
   }
