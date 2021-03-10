@@ -1,25 +1,30 @@
-import 'dart:convert';
+import 'package:flutter/material.dart';
 
 class Note {
   String title;
   String text;
   DateTime date;
-  String pin;
+  bool locked;
+  bool isFavorite;
+  Color indicator;
 
   Note({
     this.title = '',
     this.text = '',
     this.date,
-    this.pin = '',
+    this.locked = false,
+    this.isFavorite = false,
+    this.indicator,
   });
 
   factory Note.fromJSON(Map<String, dynamic> json) {
     return new Note(
-      title: json["title"],
-      text: json["text"],
-      date: DateTime.tryParse(json["date"]),
-      pin: json["pin"],
-    );
+        title: json["title"],
+        text: json["text"],
+        date: DateTime.tryParse(json["date"]),
+        locked: json["locked"],
+        indicator: json["indicator"],
+        isFavorite: json["isFavorite"]);
   }
 
   static List<Note> fromJSONList(List<Map<String, dynamic>> json) {
@@ -33,7 +38,9 @@ class Note {
       "title": title,
       "text": text,
       "date": date?.toString(),
-      "pin": pin,
+      "locked": locked,
+      "indiator": indicator,
+      "isFavorite": isFavorite,
     };
   }
 
@@ -43,62 +50,77 @@ class Note {
     return list;
   }
 
-  Note copyWith({
-    String title,
-    String text,
-    DateTime date,
-    String pin,
-  }) {
-    return Note(
-      title: title ?? this.title,
-      text: text ?? this.text,
-      date: date ?? this.date,
-      pin: pin ?? this.pin,
-    );
-  }
+  // Note copyWith({
+  //   String title,
+  //   String text,
+  //   DateTime date,
+  //   String pin,
+  //   bool isFavorite,
+  //   Color indicator,
+  // }) {
+  //   return Note(
+  //     title: title ?? this.title,
+  //     text: text ?? this.text,
+  //     date: date ?? this.date,
+  //     pin: pin ?? this.pin,
+  //     isFavorite: isFavorite ?? this.isFavorite,
+  //     indicator: indicator ?? this.indicator,
+  //   );
+  // }
 
-  Map<String, dynamic> toMap() {
-    return {
-      'title': title,
-      'text': text,
-      'date': date?.millisecondsSinceEpoch,
-      'pin': pin,
-    };
-  }
+  // Map<String, dynamic> toMap() {
+  //   return {
+  //     'title': title,
+  //     'text': text,
+  //     'date': date?.millisecondsSinceEpoch,
+  //     'pin': pin,
+  //     'isFavorite': isFavorite,
+  //     'indicator': indicator?.value,
+  //   };
+  // }
 
-  factory Note.fromMap(Map<String, dynamic> map) {
-    if (map == null) return null;
+  // factory Note.fromMap(Map<String, dynamic> map) {
+  //   if (map == null) return null;
 
-    return Note(
-      title: map['title'],
-      text: map['text'],
-      date: DateTime.fromMillisecondsSinceEpoch(map['date']),
-      pin: map['pin'],
-    );
-  }
+  //   return Note(
+  //     title: map['title'],
+  //     text: map['text'],
+  //     date: DateTime.fromMillisecondsSinceEpoch(map['date']),
+  //     pin: map['pin'],
+  //     isFavorite: map['isFavorite'],
+  //     indicator: Color(map['indicator']),
+  //   );
+  // }
 
-  String toJson() => json.encode(toMap());
+  // String toJson() => json.encode(toMap());
 
-  factory Note.fromJson(String source) => Note.fromMap(json.decode(source));
+  // factory Note.fromJson(String source) => Note.fromMap(json.decode(source));
 
-  @override
-  String toString() {
-    return 'Note(title: $title, text: $text, date: $date, pin: $pin)';
-  }
+  // @override
+  // String toString() {
+  //   return 'Note(title: $title, text: $text, date: $date, pin: $pin, isFavorite: $isFavorite, indicator: $indicator)';
+  // }
 
-  @override
-  bool operator ==(Object o) {
-    if (identical(this, o)) return true;
+  // @override
+  // bool operator ==(Object o) {
+  //   if (identical(this, o)) return true;
 
-    return o is Note &&
-        o.title == title &&
-        o.text == text &&
-        o.date == date &&
-        o.pin == pin;
-  }
+  //   return o is Note &&
+  //       o.title == title &&
+  //       o.text == text &&
+  //       o.date == date &&
+  //       o.pin == pin &&
+  //       o.isFavorite == isFavorite &&
+  //       o.indicator == indicator;
+  // }
 
-  @override
-  int get hashCode {
-    return title.hashCode ^ text.hashCode ^ date.hashCode ^ pin.hashCode;
-  }
+  // @override
+  // int get hashCode {
+  //   return title.hashCode ^
+  //       text.hashCode ^
+  //       date.hashCode ^
+  //       pin.hashCode ^
+  //       isFavorite.hashCode ^
+  //       indicator.hashCode;
+  // }
 }
