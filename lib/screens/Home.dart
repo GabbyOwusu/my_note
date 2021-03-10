@@ -5,7 +5,7 @@ import 'package:my_note/models/Note.dart';
 import 'package:my_note/providers/NotesProvider.dart';
 import 'package:my_note/screens/Favorites.dart';
 import 'package:my_note/screens/Search.dart';
-import 'package:my_note/screens/Workspace.dart';
+import 'package:my_note/screens/Editor.dart';
 import 'package:my_note/widgets/HomeNoteItem.dart';
 import 'package:provider/provider.dart';
 
@@ -122,23 +122,12 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(top: 16, right: 20),
-            child: Text(
-              '${provider.notes?.length ?? 0} notes',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w600,
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
-          ),
-          Padding(
             padding: const EdgeInsets.only(right: 20),
             child: IconButton(
                 icon: Icon(
                   Icons.bookmark,
                   color: Theme.of(context).primaryColor,
-                  size: 30,
+                  size: 35,
                 ),
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (_) {
@@ -152,6 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SafeArea(
           child: provider.notes.isNotEmpty
               ? SingleChildScrollView(
+                  physics: BouncingScrollPhysics(),
                   child: Column(
                     children: <Widget>[
                       Padding(
