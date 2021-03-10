@@ -11,15 +11,20 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
+  TextEditingController controller = TextEditingController();
+
   NotesProvider get provider {
     return Provider.of<NotesProvider>(context, listen: false);
   }
 
-  final controller = TextEditingController();
-
   List<Note> result = [];
-
   Note note = Note();
+
+  @override
+  void initState() {
+    result = provider.notes;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +54,7 @@ class _SearchPageState extends State<SearchPage> {
       ),
       body: SafeArea(
           child: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
         child: Column(
           children: [
             Padding(
@@ -72,7 +78,9 @@ class _SearchPageState extends State<SearchPage> {
                           .toList();
                     });
                   else
-                    result = [];
+                    setState(() {
+                      result = provider.notes;
+                    });
                   print(result);
                 },
                 autofocus: true,
