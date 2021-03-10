@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => NotesProvider(),
+          create: (context) => NotesProvider()..readFromStorage(),
         ),
       ],
       child: MaterialApp(
