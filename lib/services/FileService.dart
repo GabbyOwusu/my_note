@@ -17,9 +17,7 @@ class FileService implements FileContract {
     try {
       String filepath = await getPath();
       File file = File(filepath);
-
       await file.writeAsString(data);
-
       return true;
     } catch (e) {
       print('Failed to save...$e');
@@ -32,9 +30,7 @@ class FileService implements FileContract {
     try {
       final path = await getPath();
       File file = File(path);
-
       final result = await file?.readAsString();
-
       return result;
     } on FileSystemException catch (e) {
       print('Failed to read $e');
