@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_note/models/Note.dart';
 import 'package:my_note/providers/NotesProvider.dart';
 import 'package:my_note/screens/LockScreen.dart';
-import 'package:my_note/screens/Workspace.dart';
-import 'package:my_note/widgets/Options.dart';
+import 'package:my_note/screens/Editor.dart';
 import 'package:provider/provider.dart';
 
 class HomeNoteItem extends StatefulWidget {
@@ -24,19 +23,11 @@ class _HomeNoteItemState extends State<HomeNoteItem> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onLongPress: () {
-        showBottomSheet(
-            context: context,
-            backgroundColor: Colors.transparent,
-            builder: (context) {
-              return Options(note: widget.note);
-            });
-      },
       onTap: () async {
         await Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => widget.note.pin == ''
+            builder: (context) => widget.note.locked == false
                 ? WorkSpace(existingNote: widget.note)
                 : LockScreen(note: widget.note),
           ),
@@ -54,22 +45,38 @@ class _HomeNoteItemState extends State<HomeNoteItem> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
-              widget.note.title ?? '',
-              style: TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).primaryColor,
-              ),
+            Row(
+              children: [
+                Container(
+                  height: 8,
+                  width: 8,
+                  decoration: BoxDecoration(
+                    color: widget.note.indicator ?? Colors.purple,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+                SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    widget.note.title ?? '',
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 10),
-            widget.note.pin == ''
+            widget.note.locked == false
                 ? Text(
                     widget.note.text ?? '',
                     overflow: TextOverflow.ellipsis,
                     maxLines: 13,
                     style: TextStyle(
-                      color: Theme.of(context).primaryColor,
+                      color: Colors.grey[600],
                       height: 1.3,
                       fontSize: 13,
                     ),
