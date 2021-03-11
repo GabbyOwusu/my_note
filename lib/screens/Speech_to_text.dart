@@ -17,35 +17,6 @@ class _SpeechScreenState extends State<SpeechScreen> {
     super.initState();
   }
 
-  prompt(bool isSaved) {
-    if (isSaved == null)
-      return;
-    else
-      return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('Exit without saving?'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text('No'),
-              ),
-              FlatButton(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                onPressed: () {},
-                child: Text('Yes'),
-              ),
-            ],
-          );
-        },
-      );
-  }
-
   Future<void> record() async {
     if (!isRecording) {
       bool available = await _speech.initialize(
@@ -159,26 +130,23 @@ class _SpeechScreenState extends State<SpeechScreen> {
               recordedText ?? 'Your recorded text will appear here....',
               style: TextStyle(
                 fontSize: 25,
-                color: Colors.grey,
+                color: recordedText == null ? Colors.grey : Colors.black,
               ),
             ),
           )
         ],
       ),
       floatingActionButton: FloatingActionButton(
-          tooltip: 'Record',
-          onPressed: record,
-          child: isRecording
-              ? Image.asset(
-                  'images/record.gif',
-                  color: Colors.white,
-                  width: 30,
-                )
-              : Image.asset(
-                  'images/microphone.png',
-                  color: Colors.white,
-                  width: 20,
-                )),
+        tooltip: 'Record',
+        onPressed: record,
+        child: isRecording
+            ? Image.asset('images/record.gif', color: Colors.white, width: 30)
+            : Image.asset(
+                'images/microphone.png',
+                color: Colors.white,
+                width: 20,
+              ),
+      ),
     );
   }
 }
