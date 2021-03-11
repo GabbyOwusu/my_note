@@ -9,10 +9,6 @@ import 'package:my_note/services/FileContract.dart';
 import 'package:my_note/services/sl.dart';
 
 class NotesProvider extends BaseProvider {
-  // NotesProvider() {
-  //   (_notesList == []) ?? readFromStorage();
-  // }
-
   TextRecognizer textRecognizer = FirebaseVision.instance.textRecognizer();
   Note note = Note();
   List<Note> _notesList = [];
@@ -36,6 +32,7 @@ class NotesProvider extends BaseProvider {
   }
 
   void favorite(Note n) {
+    if (n.title.isEmpty && n.text.isEmpty) return;
     _favorites.add(n);
     n.isFavorite = true;
     print('added to favorites');
@@ -77,7 +74,7 @@ class NotesProvider extends BaseProvider {
       final json = await _storage.readFile();
       if (json == null || json.isEmpty) return '';
       final list = await jsonDecode(json).cast<Map<String, dynamic>>();
-      _notesList = Note.fromJSONList(list);
+      _notesList = Note.fromJSONList(list).toList();
       print('notelist here $_notesList');
       notifyListeners();
     } catch (e) {
