@@ -7,6 +7,7 @@ import 'package:my_note/screens/Favorites.dart';
 import 'package:my_note/screens/Search.dart';
 import 'package:my_note/screens/Editor.dart';
 import 'package:my_note/widgets/HomeNoteItem.dart';
+import 'package:my_note/widgets/logo.dart';
 import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -88,38 +89,16 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
         centerTitle: false,
-        leading: IconButton(
-          onPressed: () {
-            _key.currentState.openDrawer();
-          },
-          icon: Icon(
-            Icons.menu,
-            color: Theme.of(context).primaryColor,
-          ),
-        ),
-        title: Text.rich(
-          TextSpan(
-            text: "My",
-            style: TextStyle(
-              fontSize: 26,
-              fontWeight: FontWeight.w900,
-              color: Theme.of(context).primaryColor,
-            ),
-            children: [
-              TextSpan(
-                text: "Note",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w400,
-                  color: Theme.of(context).primaryColor,
-                ),
-              ),
-            ],
-          ),
-          style: TextStyle(
-            color: Theme.of(context).primaryColor,
-          ),
-        ),
+        // leading: IconButton(
+        //   onPressed: () {
+        //     _key.currentState.openDrawer();
+        //   },
+        //   icon: Icon(
+        //     Icons.menu,
+        //     color: Theme.of(context).primaryColor,
+        //   ),
+        // ),
+        title: Logo(),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 20),
@@ -127,7 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 icon: Icon(
                   Icons.bookmark,
                   color: Theme.of(context).primaryColor,
-                  size: 35,
+                  size: 30,
                 ),
                 onPressed: () {
                   Navigator.push(context, MaterialPageRoute(builder: (_) {
@@ -163,7 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   );
                                 },
                                 child: Container(
-                                  height: 45,
+                                  height: 42,
                                   padding: EdgeInsets.only(left: 20, right: 30),
                                   decoration: BoxDecoration(
                                     color:
@@ -198,8 +177,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                 });
                               },
                               child: Container(
-                                height: 45,
-                                width: 50,
+                                height: 42,
+                                width: 42,
                                 decoration: BoxDecoration(
                                   color:
                                       Theme.of(context).unselectedWidgetColor,
@@ -216,7 +195,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ],
                         ),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 20),
                       Padding(
                         padding: EdgeInsets.only(left: 20, right: 20, top: 10),
                         child: StaggeredGridView.countBuilder(
