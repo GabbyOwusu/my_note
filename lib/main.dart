@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
           unselectedWidgetColor: Color.fromRGBO(46, 46, 46, 6),
           disabledColor: Color.fromRGBO(182, 182, 182, 50),
           brightness: Brightness.light,
+          textTheme: ThemeData.dark().textTheme.apply(fontFamily: 'SFUI'),
         ),
         theme: ThemeData(
           brightness: Brightness.light,
