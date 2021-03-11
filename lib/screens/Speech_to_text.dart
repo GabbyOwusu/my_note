@@ -27,7 +27,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
           return AlertDialog(
             title: Text('Exit without saving?'),
             actions: [
-              FlatButton(
+              TextButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
@@ -64,10 +64,8 @@ class _SpeechScreenState extends State<SpeechScreen> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     onPressed: () {
+                      setState(() => isRecording = false);
                       Navigator.pop(context);
-                      setState(() {
-                        isRecording = false;
-                      });
                     },
                     child: Text('Cancel'),
                   ),
@@ -129,7 +127,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
                 ),
                 SizedBox(width: 20),
                 Text(
-                  'Press the botton on the bottom right corner \nto begin recording',
+                  'Press the botton on the bottom right corner to begin recording',
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
                   ),
@@ -144,10 +142,12 @@ class _SpeechScreenState extends State<SpeechScreen> {
               children: [
                 Icon(Icons.help),
                 SizedBox(width: 20),
-                Text(
-                  'Longpress on recorded text once you\'re  done to copy\nand add to your note',
-                  style: TextStyle(
-                    color: Theme.of(context).primaryColor,
+                Expanded(
+                  child: Text(
+                    'Longpress on recorded text once you\'re  done to copy and add to your note',
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                    ),
                   ),
                 )
               ],
