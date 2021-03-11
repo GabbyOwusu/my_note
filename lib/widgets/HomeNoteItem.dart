@@ -82,14 +82,17 @@ class _HomeNoteItemState extends State<HomeNoteItem> {
                     ),
                   )
                 : Icon(Icons.lock),
-            SizedBox(height: 20),
-            Text(
-              widget.note.date == now
-                  ? 'Created at ${now.day}-${now.month}-${now.year} , ${now.hour}:${now.minute}'
-                  : 'Last Edited : ${widget.note.date.day}/${widget.note.date.month}/${widget.note.date.year}  ${widget.note.date.hour}:${widget.note.date.minute}',
-              style: TextStyle(
-                color: Colors.grey,
-                fontSize: 11,
+            SizedBox(height: 15),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Text(
+                widget.note.date == now
+                    ? 'Created at ${now.day}-${now.month}-${now.year}'
+                    : 'Last Edited : ${widget.note.date.day}/${widget.note.date.month}/${widget.note.date.year}',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 11,
+                ),
               ),
             ),
           ],
