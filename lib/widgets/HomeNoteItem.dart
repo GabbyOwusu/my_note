@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 
 class HomeNoteItem extends StatefulWidget {
   final Note note;
-
   HomeNoteItem({@required this.note});
 
   @override
@@ -32,13 +31,12 @@ class _HomeNoteItemState extends State<HomeNoteItem> {
                 : LockScreen(note: widget.note),
           ),
         );
-        setState(() {});
       },
       child: AnimatedContainer(
         duration: Duration(milliseconds: 1500),
         padding: EdgeInsets.all(9),
         decoration: BoxDecoration(
-          color: Theme.of(context).unselectedWidgetColor.withOpacity(0.3),
+          color: Theme.of(context).unselectedWidgetColor.withOpacity(0.4),
           border: Border.all(color: Theme.of(context).disabledColor),
           borderRadius: BorderRadius.circular(8),
         ),
@@ -61,7 +59,7 @@ class _HomeNoteItemState extends State<HomeNoteItem> {
                     widget.note.title ?? '',
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 17,
                       fontWeight: FontWeight.bold,
                       color: Theme.of(context).primaryColor,
                     ),
@@ -74,11 +72,11 @@ class _HomeNoteItemState extends State<HomeNoteItem> {
                 ? Text(
                     widget.note.text ?? '',
                     overflow: TextOverflow.ellipsis,
-                    maxLines: 13,
+                    maxLines: 10,
                     style: TextStyle(
                       color: Colors.grey[600],
                       height: 1.3,
-                      fontSize: 13,
+                      fontSize: 14,
                     ),
                   )
                 : Icon(Icons.lock),
