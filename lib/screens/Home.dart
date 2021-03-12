@@ -101,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Logo(),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 20),
+            padding: const EdgeInsets.only(right: 5),
             child: IconButton(
                 icon: Icon(
                   Icons.bookmark,
@@ -113,6 +113,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     return Favorites();
                   }));
                 }),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(right: 20),
+            child: IconButton(
+              icon: Image.asset('images/grid.png'),
+              onPressed: () {},
+            ),
           ),
         ],
       ),
