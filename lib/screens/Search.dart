@@ -84,6 +84,7 @@ class _SearchPageState extends State<SearchPage> {
                   print(result);
                 },
                 autofocus: true,
+                cursorColor: Theme.of(context).primaryColor,
                 decoration: InputDecoration(
                   disabledBorder: InputBorder.none,
                   filled: true,
