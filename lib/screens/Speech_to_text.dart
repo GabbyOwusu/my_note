@@ -90,17 +90,19 @@ class _SpeechScreenState extends State<SpeechScreen> {
           Padding(
             padding: EdgeInsets.only(left: 20, right: 20, top: 50),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Icon(
                   Icons.help,
                   color: Theme.of(context).primaryColor,
                 ),
                 SizedBox(width: 20),
-                Text(
-                  'Press the botton on the bottom right corner to begin recording',
-                  style: TextStyle(
-                    color: Theme.of(context).primaryColor,
+                Expanded(
+                  child: Text(
+                    'Press the botton on the bottom right corner to begin recording',
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                    ),
                   ),
                 )
               ],
@@ -109,7 +111,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
           Padding(
             padding: EdgeInsets.only(left: 20, right: 20, top: 50),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Icon(Icons.help),
                 SizedBox(width: 20),
