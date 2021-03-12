@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:my_note/providers/FavoritesProvider.dart';
 import 'package:my_note/providers/NotesProvider.dart';
 import 'package:my_note/widgets/HomeNoteItem.dart';
 import 'package:provider/provider.dart';
@@ -12,12 +13,13 @@ class Favorites extends StatefulWidget {
 class _FavoritesState extends State<Favorites> {
   bool isActive = false;
 
-  NotesProvider get provider {
-    return Provider.of(context);
+  FavoritesProvider get provider {
+    return Provider.of<FavoritesProvider>(context);
   }
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FavoritesProvider>().favs;
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
