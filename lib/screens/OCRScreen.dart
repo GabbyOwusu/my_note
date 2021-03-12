@@ -45,17 +45,19 @@ class _OcrState extends State<Ocr> {
             Padding(
               padding: EdgeInsets.only(left: 20, right: 20, top: 20),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Icon(
                     Icons.help,
                     color: Theme.of(context).primaryColor,
                   ),
                   SizedBox(width: 20),
-                  Text(
-                    'Scan images with your camera or pick from gallery \nand extract thetext from them',
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
+                  Expanded(
+                    child: Text(
+                      'Scan images with your camera or pick from gallery and extract thetext from them',
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                      ),
                     ),
                   ),
                 ],
@@ -64,17 +66,19 @@ class _OcrState extends State<Ocr> {
             Padding(
               padding: EdgeInsets.only(left: 20, right: 20, top: 30),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Icon(
                     Icons.help,
                     color: Theme.of(context).primaryColor,
                   ),
                   SizedBox(width: 20),
-                  Text(
-                    'Copy and paste the extracted text anywhere\nin your notes',
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
+                  Expanded(
+                    child: Text(
+                      'Copy and paste the extracted text anywhere in your notes',
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                      ),
                     ),
                   )
                 ],
