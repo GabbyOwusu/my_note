@@ -1,11 +1,11 @@
 import 'package:image_picker/image_picker.dart';
 
 abstract class FileContract {
-  Future<String> getPath();
+  Future<String> getPath(String pathName);
 
-  Future<bool> writeFile(String data);
+  Future<bool> writeFile(String data, String uri);
 
-  Future<String> readFile();
+  Future<String> readFile(String uri);
 
   Future getImage(ImageSource source);
 }
