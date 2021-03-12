@@ -5,11 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_note/models/Note.dart';
+import 'package:my_note/providers/FavoritesProvider.dart';
 import 'package:my_note/providers/NotesProvider.dart';
 import 'package:my_note/screens/OCRScreen.dart';
-import 'package:my_note/screens/Speech_to_text.dart';
 import 'package:my_note/services/FileContract.dart';
 import 'package:my_note/services/sl.dart';
+import 'package:my_note/widgets/Recording.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 
@@ -24,7 +25,6 @@ class WorkSpace extends StatefulWidget {
 
 class _WorkSpaceState extends State<WorkSpace> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  // GlobalKey<NavigatorState> _navKey = GlobalKey<NavigatorState>();
   DateTime now = DateTime.now();
   Note note = Note();
   File noteImage;
@@ -49,6 +49,10 @@ class _WorkSpaceState extends State<WorkSpace> {
     return Provider.of<NotesProvider>(context, listen: false);
   }
 
+  FavoritesProvider get favsprovider {
+    return Provider.of<FavoritesProvider>(context, listen: false);
+  }
+
   Future<bool> _showDialog() async {
     return await showDialog<bool>(
       context: context,
@@ -69,6 +73,8 @@ class _WorkSpaceState extends State<WorkSpace> {
             TextButton(
               onPressed: () {
                 provider.deleteNote(note);
+                favsprovider.deleteFavorite(note);
+                setState(() {});
                 Navigator.pop(context, true);
               },
               child: Text('Delete'),
@@ -120,6 +126,7 @@ class _WorkSpaceState extends State<WorkSpace> {
         backgroundColor: Theme.of(context).primaryColor,
         content: Text(
           note.isFavorite ? 'Added to favorites' : 'Removed to Favorites',
+          style: TextStyle(color: Theme.of(context).scaffoldBackgroundColor),
         ),
       ),
     );
@@ -189,7 +196,9 @@ class _WorkSpaceState extends State<WorkSpace> {
                     padding: EdgeInsets.all(8),
                     child: IconButton(
                       onPressed: () {
-                        provider.favorite(note);
+                        setState(() {
+                          favsprovider.favorite(note);
+                        });
                         snackBar();
                       },
                       icon: Icon(
@@ -203,7 +212,9 @@ class _WorkSpaceState extends State<WorkSpace> {
                     padding: const EdgeInsets.all(8.0),
                     child: IconButton(
                       onPressed: () {
-                        provider.deleteFavorite(note);
+                        setState(() {
+                          favsprovider.deleteFavorite(note);
+                        });
                         snackBar();
                       },
                       icon: Icon(
@@ -252,6 +263,7 @@ class _WorkSpaceState extends State<WorkSpace> {
                   fontSize: 23,
                   fontWeight: FontWeight.bold,
                 ),
+                cursorColor: Theme.of(context).primaryColor,
                 decoration: InputDecoration(
                   contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
                   hintText: 'Title',
@@ -301,6 +313,7 @@ class _WorkSpaceState extends State<WorkSpace> {
                   fontSize: 15,
                   color: Theme.of(context).primaryColor,
                 ),
+                cursorColor: Theme.of(context).primaryColor,
                 keyboardType: TextInputType.multiline,
                 maxLines: null,
                 decoration: InputDecoration(
@@ -362,20 +375,13 @@ class _WorkSpaceState extends State<WorkSpace> {
               Padding(
                 padding: const EdgeInsets.only(right: 20),
                 child: IconButton(
-                  icon: Image.asset(
-                    'images/mic_icon.png',
-                    width: 17,
-                    color: Theme.of(context).primaryColor,
-                  ),
+                  icon: Icon(Icons.mic, size: 30),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
+                    showModalBottomSheet(
+                        context: context,
                         builder: (context) {
-                          return SpeechScreen();
-                        },
-                      ),
-                    );
+                          return Recording();
+                        });
                   },
                 ),
               ),
