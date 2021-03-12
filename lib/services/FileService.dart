@@ -6,16 +6,16 @@ import 'package:path_provider/path_provider.dart';
 
 class FileService implements FileContract {
   @override
-  Future<String> getPath() async {
+  Future<String> getPath(String pathName) async {
     Directory directory = await getApplicationDocumentsDirectory();
-    String path = directory.path + '/mynotes.txt';
+    String path = directory.path + pathName;
     return path;
   }
 
   @override
-  Future<bool> writeFile(String data) async {
+  Future<bool> writeFile(String data, String uri) async {
     try {
-      String filepath = await getPath();
+      String filepath = await getPath(uri);
       File file = File(filepath);
       await file.writeAsString(data);
       return true;
@@ -26,9 +26,9 @@ class FileService implements FileContract {
   }
 
   @override
-  Future<String> readFile() async {
+  Future<String> readFile(String uri) async {
     try {
-      final path = await getPath();
+      final path = await getPath(uri);
       File file = File(path);
       final result = await file?.readAsString();
       return result;
