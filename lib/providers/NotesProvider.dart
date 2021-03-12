@@ -10,17 +10,13 @@ import 'package:my_note/services/sl.dart';
 
 class NotesProvider extends BaseProvider {
   TextRecognizer textRecognizer = FirebaseVision.instance.textRecognizer();
-  Note note = Note();
   List<Note> _notesList = [];
-  List<Note> _favorites = [];
   String _extractedText = '';
-  bool _checkLocked = false;
+  Note note = Note();
   File _image;
 
-  List<Note> get favs => _favorites.reversed.toList();
   List<Note> get notes => _notesList.reversed.toList();
   String get extracted => _extractedText;
-  bool get islocked => _checkLocked;
 
   final _storage = sl.get<FileContract>();
 
@@ -29,21 +25,6 @@ class NotesProvider extends BaseProvider {
     _notesList.add(n);
     notifyListeners();
     saveToStorage();
-  }
-
-  void favorite(Note n) {
-    if (n.title.isEmpty && n.text.isEmpty) return;
-    _favorites.add(n);
-    n.isFavorite = true;
-    print('added to favorites');
-    notifyListeners();
-  }
-
-  void deleteFavorite(Note n) {
-    _favorites.remove(n);
-    n.isFavorite = false;
-    print('remove from favorites');
-    notifyListeners();
   }
 
   void deleteNote(Note n) {
@@ -63,7 +44,7 @@ class NotesProvider extends BaseProvider {
     try {
       final list = Note.toJSONList(_notesList);
       print(jsonEncode(list));
-      return _storage.writeFile(jsonEncode(list));
+      return _storage.writeFile(jsonEncode(list), '/mynotes.txt');
     } catch (e) {
       print('Failed to save $e');
     }
@@ -71,7 +52,7 @@ class NotesProvider extends BaseProvider {
 
   Future<void> readFromStorage() async {
     try {
-      final json = await _storage.readFile();
+      final json = await _storage.readFile('/mynotes.txt');
       if (json == null || json.isEmpty) return '';
       final list = await jsonDecode(json).cast<Map<String, dynamic>>();
       _notesList = Note.fromJSONList(list).toList();
