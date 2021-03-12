@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_note/providers/CategoryProvider.dart';
+import 'package:my_note/providers/FavoritesProvider.dart';
 import 'package:my_note/providers/NotesProvider.dart';
 import 'package:my_note/screens/Home.dart';
 import 'package:my_note/screens/LockScreen.dart';
@@ -20,6 +22,12 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => NotesProvider()..readFromStorage(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => FavoritesProvider()..readFromStorage(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => CategoryProvider(),
         ),
       ],
       child: MaterialApp(
