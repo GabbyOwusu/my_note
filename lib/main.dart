@@ -49,17 +49,17 @@ class MyApp extends StatelessWidget {
           ),
           scaffoldBackgroundColor: Colors.white,
           primaryColor: Colors.black,
-          unselectedWidgetColor: Color.fromRGBO(235, 235, 235, 6),
+          unselectedWidgetColor: Color.fromRGBO(235, 235, 235, 1),
           buttonColor: Colors.lightBlueAccent,
           disabledColor: Colors.grey.shade300,
           fontFamily: 'SFUI',
         ),
         home: Splash(),
-        routes: {
-          '/home': (BuildContext context) => MyHomePage(),
-          '/lockscreen': (BuildContext context) => LockScreen(),
-          '/workspace': (BuildContext context) => WorkSpace(),
-        },
+        // routes: {
+        //   '/home': (BuildContext context) => MyHomePage(),
+        //   '/lockscreen': (BuildContext context) => LockScreen(),
+        //   '/workspace': (BuildContext context) => WorkSpace(),
+        // },
       ),
     );
   }
