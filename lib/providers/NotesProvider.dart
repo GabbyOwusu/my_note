@@ -33,6 +33,18 @@ class NotesProvider extends BaseProvider {
     saveToStorage();
   }
 
+  void lockNote(Note n) {
+    n.locked = true;
+    print(n.locked);
+    notifyListeners();
+  }
+
+  void unlockNote(Note n) {
+    n.locked = false;
+    print(n.locked);
+    notifyListeners();
+  }
+
   void update(Note newNote, Note oldNote) {
     final index = _notesList.indexWhere((o) => o == oldNote);
     _notesList[index] = newNote;
@@ -56,7 +68,7 @@ class NotesProvider extends BaseProvider {
       if (json == null || json.isEmpty) return '';
       final list = await jsonDecode(json).cast<Map<String, dynamic>>();
       _notesList = Note.fromJSONList(list).toList();
-      print('notelist here $_notesList');
+      print('notelist here ${_notesList.toList()}');
       notifyListeners();
     } catch (e) {
       print('Error here $e');
