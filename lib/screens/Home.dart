@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:my_note/models/Note.dart';
 import 'package:my_note/providers/NotesProvider.dart';
+import 'package:my_note/screens/CategoryScreen.dart';
 import 'package:my_note/screens/Favorites.dart';
 import 'package:my_note/screens/Search.dart';
 import 'package:my_note/screens/Editor.dart';
@@ -117,8 +118,20 @@ class _MyHomePageState extends State<MyHomePage> {
           Padding(
             padding: const EdgeInsets.only(right: 20),
             child: IconButton(
-              icon: Image.asset('images/grid.png'),
-              onPressed: () {},
+              icon: Image.asset(
+                'images/grid.png',
+                color: Theme.of(context).primaryColor,
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return CategoryScreen();
+                    },
+                  ),
+                );
+              },
             ),
           ),
         ],
