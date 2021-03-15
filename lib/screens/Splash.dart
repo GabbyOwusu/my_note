@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:my_note/providers/NotesProvider.dart';
 import 'package:my_note/screens/Home.dart';
+import 'package:provider/provider.dart';
 
 class Splash extends StatefulWidget {
   @override
@@ -9,6 +11,10 @@ class Splash extends StatefulWidget {
 class _SplashState extends State<Splash> with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation<Offset> offset;
+
+  NotesProvider get provider {
+    return Provider.of<NotesProvider>(context);
+  }
 
   @override
   void initState() {
