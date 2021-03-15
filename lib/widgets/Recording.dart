@@ -1,6 +1,5 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter_sound/flutter_sound.dart';
 
 class Recording extends StatefulWidget {
   const Recording({Key key}) : super(key: key);
@@ -35,14 +34,19 @@ class _RecordingState extends State<Recording> {
                     setState(() => record = !record);
                     if (record) {
                       //TODO add recording
-                    } else {}
+                    } else {
+                      Future.delayed(Duration(milliseconds: 400), () {
+                        Navigator.pop(context);
+                      });
+                    }
                   },
                   child: Container(
-                    height: 100,
-                    width: 100,
+                    height: 120,
+                    width: 120,
                     decoration: BoxDecoration(
                       color: Colors.purple,
                       shape: BoxShape.circle,
+                      border: Border.all(color: Colors.white, width: 3),
                     ),
                     child: Center(
                       child: Icon(
