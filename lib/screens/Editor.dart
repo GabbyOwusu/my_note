@@ -98,7 +98,7 @@ class _WorkSpaceState extends State<WorkSpace> {
           actions: [
             TextButton(
               onPressed: () {
-                setState(() => note.locked = false);
+                setState(() => provider.unlockNote(note));
                 Navigator.pop(context);
               },
               child: Text('Remove lock'),
@@ -404,7 +404,7 @@ class _WorkSpaceState extends State<WorkSpace> {
                   child: IconButton(
                     onPressed: () async {
                       setState(() {
-                        note.locked = true;
+                        provider.lockNote(note);
                       });
                     },
                     icon: Icon(
