@@ -31,6 +31,7 @@ class _HomeNoteItemState extends State<HomeNoteItem> {
                 : LockScreen(note: widget.note),
           ),
         );
+        // setState(() {});
       },
       child: AnimatedContainer(
         duration: Duration(milliseconds: 1500),
