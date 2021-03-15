@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:my_note/providers/FavoritesProvider.dart';
-import 'package:my_note/providers/NotesProvider.dart';
 import 'package:my_note/widgets/HomeNoteItem.dart';
 import 'package:provider/provider.dart';
 
