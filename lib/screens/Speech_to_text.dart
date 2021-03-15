@@ -84,59 +84,62 @@ class _SpeechScreenState extends State<SpeechScreen> {
           ),
         ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(left: 20, right: 20, top: 50),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Icon(
-                  Icons.help,
-                  color: Theme.of(context).primaryColor,
-                ),
-                SizedBox(width: 20),
-                Expanded(
-                  child: Text(
-                    'Press the botton on the bottom right corner to begin recording',
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                    ),
+      body: SingleChildScrollView(
+        reverse: true,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: 20, right: 20, top: 50),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(
+                    Icons.help,
+                    color: Theme.of(context).primaryColor,
                   ),
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 20, right: 20, top: 50),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Icon(Icons.help),
-                SizedBox(width: 20),
-                Expanded(
-                  child: Text(
-                    'Longpress on recorded text once you\'re  done to copy and add to your note',
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
+                  SizedBox(width: 20),
+                  Expanded(
+                    child: Text(
+                      'Press the botton on the bottom right corner to begin recording',
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                      ),
                     ),
-                  ),
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 20, right: 20, top: 150),
-            child: SelectableText(
-              recordedText ?? 'Your recorded text will appear here....',
-              style: TextStyle(
-                fontSize: 25,
-                color: recordedText == null ? Colors.grey : Colors.black,
+                  )
+                ],
               ),
             ),
-          )
-        ],
+            Padding(
+              padding: EdgeInsets.only(left: 20, right: 20, top: 50),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(Icons.help),
+                  SizedBox(width: 20),
+                  Expanded(
+                    child: Text(
+                      'Longpress on recorded text once you\'re  done to copy and add to your note',
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 20, right: 20, top: 150),
+              child: SelectableText(
+                recordedText ?? 'Your recorded text will appear here....',
+                style: TextStyle(
+                  fontSize: 25,
+                  color: recordedText == null ? Colors.grey : Colors.black,
+                ),
+              ),
+            )
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Record',
