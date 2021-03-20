@@ -16,7 +16,6 @@ class FavoritesProvider extends BaseProvider {
     if (n.title.isEmpty && n.text.isEmpty) return;
     _favorites.add(n);
     n.isFavorite = true;
-    print(n.locked);
     saveToStorage();
     print('added to favorites');
     notifyListeners();
