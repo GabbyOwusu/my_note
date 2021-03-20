@@ -27,7 +27,7 @@ class _WorkSpaceState extends State<WorkSpace> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   DateTime now = DateTime.now();
   Note note = Note();
-  File noteImage;
+  // File noteImage;
 
   bool isChanged = false;
   bool isBold = false;
@@ -116,8 +116,9 @@ class _WorkSpaceState extends State<WorkSpace> {
   }
 
   void share(BuildContext context, Note note) {
-    String text = '${note.title}\n ${note.text}';
-    Share.share(text, subject: note.text);
+    String text = '${note.title}\n\n${note.text}';
+    Share.shareFiles([note.imagePath], text: text);
+    // Share.share(text, subject: note.text);
   }
 
   void snackBar() {
@@ -328,11 +329,11 @@ class _WorkSpaceState extends State<WorkSpace> {
                 ),
               ),
               SizedBox(height: 20),
-              noteImage != null
+              note.imagePath != null
                   ? Container(
                       margin: EdgeInsets.all(20),
                       alignment: Alignment.bottomLeft,
-                      child: Image.file(noteImage),
+                      child: Image.file(File(note.imagePath)),
                     )
                   : Text(''),
               Align(
@@ -390,11 +391,7 @@ class _WorkSpaceState extends State<WorkSpace> {
                 child: IconButton(
                   icon: Icon(Icons.image_outlined),
                   onPressed: () async {
-                    final picture =
-                        await _storage.getImage(ImageSource.gallery);
-                    setState(() {
-                      noteImage = File(picture.path);
-                    });
+                    provider.addImage(note);
                   },
                 ),
               ),
