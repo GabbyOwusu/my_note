@@ -10,6 +10,8 @@ A personal notes app for taking notes and making memos.
 - Adding picture to notes.
 - Format highlighted text (In oprogress)
 
+
+
 ## Preview
 
 ![Screenshot](https://github.com/GabbyOwusu/my_note/blob/main/images/appImage.png)
