@@ -9,5 +9,5 @@ abstract class FileContract {
 
   Future getImage(ImageSource source);
 
-  Future<String> getImagePath(int index);
+  Future<String> getImagePath();
 }
