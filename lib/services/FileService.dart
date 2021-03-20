@@ -1,8 +1,6 @@
 import 'dart:io';
-import 'dart:math';
 
 import 'package:image_picker/image_picker.dart';
-import 'package:my_note/models/Note.dart';
 import 'package:my_note/services/FileContract.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -51,12 +49,13 @@ class FileService implements FileContract {
   }
 
   @override
-  Future<String> getImagePath(int index) async {
+  Future<String> getImagePath() async {
     Directory dir = await getApplicationDocumentsDirectory();
+    final diff = DateTime.now();
     ImagePicker picker = ImagePicker();
     PickedFile pic = await picker.getImage(source: ImageSource.gallery);
     File picture = File(pic.path);
-    File imagePath = await picture.copy(dir.path + 'image$index.png');
+    File imagePath = await picture.copy(dir.path + 'image$diff.png');
     return imagePath.path;
   }
 }
