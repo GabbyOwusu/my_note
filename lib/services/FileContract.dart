@@ -8,4 +8,6 @@ abstract class FileContract {
   Future<String> readFile(String uri);
 
   Future getImage(ImageSource source);
+
+  Future<String> getImagePath(int index);
 }
