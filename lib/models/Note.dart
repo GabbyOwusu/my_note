@@ -7,6 +7,7 @@ class Note {
   bool locked;
   bool isFavorite;
   Color indicator;
+  String imagePath;
 
   Note({
     this.title = '',
@@ -15,6 +16,7 @@ class Note {
     this.locked = false,
     this.isFavorite = false,
     this.indicator,
+    this.imagePath,
   });
 
   factory Note.fromJSON(Map<String, dynamic> json) {
@@ -24,6 +26,7 @@ class Note {
         date: DateTime.tryParse(json["date"]),
         locked: json["locked"],
         indicator: json["indicator"],
+        imagePath: json["imagePath"],
         isFavorite: json["isFavorite"]);
   }
 
@@ -40,6 +43,7 @@ class Note {
       "date": date?.toString(),
       "locked": locked,
       "indiator": indicator,
+      "imagePath": imagePath,
       "isFavorite": isFavorite,
     };
   }
