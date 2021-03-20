@@ -52,6 +52,12 @@ class NotesProvider extends BaseProvider {
     saveToStorage();
   }
 
+  void addImage(Note n) async {
+    final image = await _storage.getImagePath();
+    n.imagePath = image;
+    notifyListeners();
+  }
+
   Future saveToStorage() async {
     try {
       final list = Note.toJSONList(_notesList);
