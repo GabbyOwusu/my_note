@@ -55,7 +55,7 @@ class FileService implements FileContract {
     ImagePicker picker = ImagePicker();
     PickedFile pic = await picker.getImage(source: ImageSource.gallery);
     File picture = File(pic.path);
-    File imagePath = await picture.copy(dir.path + 'image$diff.png');
+    File imagePath = await picture.copy(dir.path + 'note-2-$diff.png');
     return imagePath.path;
   }
 }
