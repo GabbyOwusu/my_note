@@ -8,6 +8,7 @@ import 'package:my_note/models/Note.dart';
 import 'package:my_note/providers/FavoritesProvider.dart';
 import 'package:my_note/providers/NotesProvider.dart';
 import 'package:my_note/screens/OCRScreen.dart';
+import 'package:my_note/screens/ShowImage.dart';
 import 'package:my_note/services/FileContract.dart';
 import 'package:my_note/services/sl.dart';
 import 'package:my_note/widgets/Recording.dart';
@@ -27,7 +28,6 @@ class _WorkSpaceState extends State<WorkSpace> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   DateTime now = DateTime.now();
   Note note = Note();
-  // File noteImage;
 
   bool isChanged = false;
   bool isBold = false;
@@ -36,8 +36,6 @@ class _WorkSpaceState extends State<WorkSpace> {
   bool isRecording = false;
   Color pickerColor = Color(0xff443a49);
   Color currentColor = Color(0xff443a49);
-
-  final _storage = sl.get<FileContract>();
 
   @override
   void initState() {
@@ -90,7 +88,7 @@ class _WorkSpaceState extends State<WorkSpace> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Remove lock'),
+          title: Text('Unlock note'),
           content: Text(
             'Do you want to remove lock ?',
             style: TextStyle(color: Colors.grey),
@@ -330,10 +328,33 @@ class _WorkSpaceState extends State<WorkSpace> {
               ),
               SizedBox(height: 20),
               note.imagePath != null
-                  ? Container(
-                      margin: EdgeInsets.all(20),
-                      alignment: Alignment.bottomLeft,
-                      child: Image.file(File(note.imagePath)),
+                  ? GestureDetector(
+                      onTap: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return ShowImage(
+                            note: note,
+                            deleteImage: () {
+                              setState(() {
+                                note.imagePath = null;
+                              });
+                              Navigator.pop(context);
+                            },
+                          );
+                        }));
+                      },
+                      child: Hero(
+                        tag: '${note.imagePath}',
+                        child: Container(
+                          // height: 600,
+                          margin: EdgeInsets.all(20),
+                          alignment: Alignment.bottomLeft,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Image.file(File(note.imagePath)),
+                        ),
+                      ),
                     )
                   : Text(''),
               Align(
