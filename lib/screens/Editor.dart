@@ -23,6 +23,7 @@ class WorkSpace extends StatefulWidget {
 
 class _WorkSpaceState extends State<WorkSpace> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  ScrollController scrollcontroller;
   DateTime now = DateTime.now();
   Note note = Note();
 
@@ -37,6 +38,7 @@ class _WorkSpaceState extends State<WorkSpace> {
   @override
   void initState() {
     if (widget.existingNote != null) note = widget.existingNote;
+    scrollcontroller = ScrollController();
     super.initState();
   }
 
@@ -242,138 +244,150 @@ class _WorkSpaceState extends State<WorkSpace> {
             SizedBox(width: 20),
           ],
         ),
-        body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
-          child: Column(
-            children: <Widget>[
-              SizedBox(height: 10),
-              TextField(
-                onChanged: (val) {
-                  isChanged = !isChanged;
-                  note.title = val;
-                  note.date = DateTime.now();
-                },
-                controller: TextEditingController(text: note.title.trim()),
-                style: TextStyle(
-                  color: Theme.of(context).primaryColor,
-                  fontSize: 23,
-                  fontWeight: FontWeight.bold,
-                ),
-                cursorColor: Theme.of(context).primaryColor,
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                  hintText: 'Title',
-                  hintStyle: TextStyle(
-                    fontSize: 19,
-                    color: Colors.grey,
+        body: Scrollbar(
+          thickness: 10.0,
+          // isAlwaysShown: true,
+          radius: Radius.circular(8),
+          controller: scrollcontroller,
+          child: SingleChildScrollView(
+            controller: scrollcontroller,
+            physics: BouncingScrollPhysics(),
+            child: Column(
+              children: <Widget>[
+                SizedBox(height: 10),
+                TextField(
+                  onChanged: (val) {
+                    isChanged = !isChanged;
+                    note.title = val;
+                    note.date = DateTime.now();
+                  },
+                  controller: TextEditingController(text: note.title.trim()),
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 23,
+                    fontWeight: FontWeight.bold,
                   ),
-                  border: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20),
-                child: Row(
-                  children: [
-                    Text(
-                      'Uncategorized',
-                      style: TextStyle(
-                        color: Colors.grey,
-                      ),
+                  cursorColor: Theme.of(context).primaryColor,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                    hintText: 'Title',
+                    hintStyle: TextStyle(
+                      fontSize: 19,
+                      color: Colors.grey,
                     ),
-                    SizedBox(width: 5),
-                    GestureDetector(
-                      onTap: () => pickColor(),
-                      child: Container(
-                        margin: EdgeInsets.only(left: 5),
-                        height: 12,
-                        width: 12,
-                        decoration: BoxDecoration(
-                          color: note.indicator ?? Colors.purple,
-                          shape: BoxShape.circle,
+                    border: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: Row(
+                    children: [
+                      Text(
+                        'Uncategorized',
+                        style: TextStyle(
+                          color: Colors.grey,
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              TextField(
-                enableInteractiveSelection: true,
-                onChanged: (val) {
-                  note.text = val;
-                  isChanged = !isChanged;
-                  note.date = DateTime.now();
-                },
-                controller: TextEditingController(text: note.text),
-                style: TextStyle(
-                  fontSize: 15,
-                  color: Theme.of(context).primaryColor,
-                ),
-                cursorColor: Theme.of(context).primaryColor,
-                keyboardType: TextInputType.multiline,
-                maxLines: null,
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                  hintText: 'Type here',
-                  hintStyle: TextStyle(
-                    fontSize: 19,
-                    color: Colors.grey,
-                  ),
-                  border: InputBorder.none,
-                  enabledBorder: InputBorder.none,
-                ),
-              ),
-              SizedBox(height: 20),
-              note.imagePath != null
-                  ? GestureDetector(
-                      onTap: () {
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) {
-                          return ShowImage(
-                            note: note,
-                            deleteImage: () {
-                              setState(() {
-                                note.imagePath = null;
-                              });
-                              Navigator.pop(context);
-                            },
-                          );
-                        }));
-                      },
-                      child: Hero(
-                        tag: '${note.imagePath}',
+                      SizedBox(width: 5),
+                      GestureDetector(
+                        onTap: () => pickColor(),
                         child: Container(
-                          // height: 600,
-                          margin: EdgeInsets.all(20),
-                          alignment: Alignment.bottomLeft,
+                          margin: EdgeInsets.only(left: 5),
+                          height: 12,
+                          width: 12,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
+                            color: note.indicator ?? Colors.purple,
+                            shape: BoxShape.circle,
                           ),
-                          child: Image.file(File(note.imagePath)),
                         ),
                       ),
-                    )
-                  : Text(''),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: Padding(
-                  padding: EdgeInsets.only(right: 20),
-                  child: Text(
-                    note.date == null
-                        ? '${now.day}/${now.month}/${now.year}'
-                        : '${note.date.day}/${note.date.month}/${note.date.year}',
-                    style: TextStyle(color: Colors.grey),
+                    ],
                   ),
                 ),
-              ),
-              SizedBox(height: 100),
-            ],
+                TextField(
+                  enableInteractiveSelection: true,
+                  onChanged: (val) {
+                    note.text = val;
+                    isChanged = !isChanged;
+                    note.date = DateTime.now();
+                  },
+                  controller: TextEditingController(text: note.text),
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  cursorColor: Theme.of(context).primaryColor,
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                    hintText: 'Type here',
+                    hintStyle: TextStyle(
+                      fontSize: 19,
+                      color: Colors.grey,
+                    ),
+                    border: InputBorder.none,
+                    enabledBorder: InputBorder.none,
+                  ),
+                ),
+                SizedBox(height: 20),
+                note.imagePath != null
+                    ? GestureDetector(
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return ShowImage(
+                              note: note,
+                              deleteImage: () {
+                                setState(() {
+                                  note.imagePath = null;
+                                });
+                                Navigator.pop(context);
+                              },
+                            );
+                          }));
+                        },
+                        child: Hero(
+                          tag: '${note.imagePath}',
+                          child: Container(
+                            // height: 600,
+                            margin: EdgeInsets.all(20),
+                            alignment: Alignment.bottomLeft,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Image.file(File(note.imagePath)),
+                          ),
+                        ),
+                      )
+                    : Text(''),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 20),
+                    child: Text(
+                      note.date == null
+                          ? '${now.day}/${now.month}/${now.year}'
+                          : '${note.date.day}/${note.date.month}/${note.date.year}',
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 100),
+              ],
+            ),
           ),
         ),
         bottomSheet: Container(
           padding: const EdgeInsets.only(left: 20),
           height: 50,
-          color: Theme.of(context).scaffoldBackgroundColor,
+          decoration: BoxDecoration(
+            color: Theme.of(context).scaffoldBackgroundColor,
+            border: Border(
+              top: BorderSide(color: Colors.grey[100]),
+            ),
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
