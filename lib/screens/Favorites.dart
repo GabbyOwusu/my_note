@@ -13,7 +13,38 @@ class _FavoritesState extends State<Favorites> {
   bool isActive = false;
 
   FavoritesProvider get provider {
-    return Provider.of<FavoritesProvider>(context);
+    return Provider.of<FavoritesProvider>(context, listen: false);
+  }
+
+  Future<bool> _showDialog() async {
+    return await showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Delete'),
+          content: Text(
+            'Do you really want to clear this favorites ?',
+            style: TextStyle(color: Colors.grey),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, false);
+              },
+              child: Text('No'),
+            ),
+            TextButton(
+              onPressed: () {
+                provider.clearFavorites();
+                setState(() {});
+                Navigator.pop(context, true);
+              },
+              child: Text('Clear'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
@@ -45,21 +76,17 @@ class _FavoritesState extends State<Favorites> {
             padding: EdgeInsets.only(right: 10),
             child: IconButton(
                 icon: Icon(
-                  isActive ? Icons.grid_on : Icons.menu,
+                  Icons.delete,
                   color: Theme.of(context).primaryColor,
                 ),
                 onPressed: () {
-                  setState(() {
-                    isActive = !isActive;
-                  });
+                  _showDialog();
                 }),
           )
         ],
       ),
       body: provider.favs.length == 0
-          ? Center(
-              child: Text('Your favorite notes will appear here'),
-            )
+          ? Center(child: Text('Your favorite notes will appear here'))
           : SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: Padding(
