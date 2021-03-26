@@ -23,19 +23,19 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.0
-  flutter_staggered_grid_view: ^0.3.2
-  flutter_colorpicker: ^0.3.5
-  get_it: ^5.0.1
-  path_provider: ^1.6.18
-  provider: ^5.0.0
-  share: ^0.6.5+4
-  speech_to_text: ^2.5.0
-  firebase_ml_vision: ^0.9.10
-  image_picker: ^0.6.7+17
-  local_auth: ^0.6.3+4
-  avatar_glow: ^1.2.0
-  # flutter_sound: ^8.0.0+6 
+  cupertino_icons: 
+  flutter_staggered_grid_view: 
+  flutter_colorpicker: 
+  get_it: 
+  path_provider: 
+  provider: 
+  share: 
+  speech_to_text: 
+  firebase_ml_vision: 
+  image_picker: 
+  local_auth: 
+  avatar_glow: 
+  flutter_sound:  
   
 
 dev_dependencies:
