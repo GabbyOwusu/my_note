@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:my_note/models/Note.dart';
 import 'package:my_note/providers/BaseProvider.dart';
-import 'package:my_note/screens/Favorites.dart';
 import 'package:my_note/services/FileContract.dart';
 import 'package:my_note/services/sl.dart';
 
@@ -26,6 +25,12 @@ class FavoritesProvider extends BaseProvider {
     n.isFavorite = false;
     saveToStorage();
     print('remove from favorites');
+    notifyListeners();
+  }
+
+  void clearFavorites() {
+    _favorites.clear();
+    saveToStorage();
     notifyListeners();
   }
 
