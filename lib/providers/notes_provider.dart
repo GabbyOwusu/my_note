@@ -5,11 +5,13 @@ import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_note/models/Note.dart';
 import 'package:my_note/providers/base_provider.dart';
+import 'package:my_note/services/audio_service.dart';
 import 'package:my_note/services/file_contract.dart';
 import 'package:my_note/services/sl.dart';
 
 class NotesProvider extends BaseProvider {
   TextRecognizer textRecognizer = FirebaseVision.instance.textRecognizer();
+  AudioService audioService = AudioService();
   List<Note> _notesList = [];
   String _extractedText = '';
   Note note = Note();
@@ -58,6 +60,10 @@ class NotesProvider extends BaseProvider {
     notifyListeners();
   }
 
+  void addRecording(Note n) async {
+    await audioService.initRecording();
+  }
+
   Future saveToStorage() async {
     try {
       final list = Note.toJSONList(_notesList);
@@ -101,7 +107,6 @@ class NotesProvider extends BaseProvider {
     } else {
       return;
     }
-
     notifyListeners();
   }
 }
