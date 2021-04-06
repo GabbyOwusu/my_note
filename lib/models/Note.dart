@@ -8,6 +8,7 @@ class Note {
   bool isFavorite;
   Color indicator;
   String imagePath;
+  String audioPath;
 
   Note({
     this.title = '',
@@ -17,17 +18,20 @@ class Note {
     this.isFavorite = false,
     this.indicator,
     this.imagePath,
+    this.audioPath,
   });
 
   factory Note.fromJSON(Map<String, dynamic> json) {
     return new Note(
-        title: json["title"],
-        text: json["text"],
-        date: DateTime.tryParse(json["date"]),
-        locked: json["locked"],
-        indicator: json["indicator"],
-        imagePath: json["imagePath"],
-        isFavorite: json["isFavorite"]);
+      title: json["title"],
+      text: json["text"],
+      date: DateTime.tryParse(json["date"]),
+      locked: json["locked"],
+      indicator: json["indicator"],
+      imagePath: json["imagePath"],
+      isFavorite: json["isFavorite"],
+      audioPath: json["audioPath"],
+    );
   }
 
   static List<Note> fromJSONList(List<Map<String, dynamic>> json) {
@@ -45,6 +49,7 @@ class Note {
       "indiator": indicator,
       "imagePath": imagePath,
       "isFavorite": isFavorite,
+      "audioPath": audioPath,
     };
   }
 
