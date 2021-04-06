@@ -50,7 +50,7 @@ class _RecordingState extends State<Recording> {
                     ),
                     child: Center(
                       child: Icon(
-                        Icons.mic,
+                        record ? Icons.stop : Icons.mic,
                         color: Colors.white,
                         size: 30,
                       ),
