@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:my_note/models/Note.dart';
-import 'package:my_note/providers/BaseProvider.dart';
-import 'package:my_note/services/FileContract.dart';
+import 'package:my_note/providers/base_provider.dart';
+import 'package:my_note/services/file_contract.dart';
 import 'package:my_note/services/sl.dart';
 
 class NotesProvider extends BaseProvider {

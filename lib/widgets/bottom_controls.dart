@@ -3,9 +3,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import 'package:my_note/models/Note.dart';
-import 'package:my_note/providers/NotesProvider.dart';
-import 'package:my_note/screens/OCRScreen.dart';
-import 'package:my_note/widgets/Recording.dart';
+import 'package:my_note/providers/notes_provider.dart';
+import 'package:my_note/screens/ocr_screen.dart';
+import 'package:my_note/widgets/reocrd_sheet.dart';
 
 class BottomControls extends StatefulWidget {
   final Note note;

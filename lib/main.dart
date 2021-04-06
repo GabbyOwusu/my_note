@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_note/providers/category_provider.dart';
 import 'package:my_note/providers/favorites_provider.dart';
 import 'package:my_note/providers/notes_provider.dart';
-import 'package:my_note/screens/home.dart';
-import 'package:my_note/screens/lockscreen.dart';
 import 'package:my_note/screens/splahscreen.dart';
-import 'package:my_note/screens/editor.dart';
 import 'package:my_note/services/sl.dart';
 import 'package:provider/provider.dart';
 

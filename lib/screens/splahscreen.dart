@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_note/providers/NotesProvider.dart';
-import 'package:my_note/screens/Home.dart';
+import 'package:my_note/providers/notes_provider.dart';
+import 'package:my_note/screens/home.dart';
 import 'package:provider/provider.dart';
 
 class Splash extends StatefulWidget {
