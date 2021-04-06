@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_note/models/Note.dart';
-import 'package:my_note/providers/NotesProvider.dart';
-import 'package:my_note/screens/LockScreen.dart';
-import 'package:my_note/screens/Editor.dart';
+import 'package:my_note/providers/notes_provider.dart';
+import 'package:my_note/screens/lockscreen.dart';
+import 'package:my_note/screens/editor.dart';
 import 'package:provider/provider.dart';
 
 class HomeNoteItem extends StatefulWidget {

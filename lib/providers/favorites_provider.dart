@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:my_note/models/Note.dart';
-import 'package:my_note/providers/BaseProvider.dart';
-import 'package:my_note/services/FileContract.dart';
+import 'package:my_note/providers/base_provider.dart';
+import 'package:my_note/services/file_contract.dart';
 import 'package:my_note/services/sl.dart';
 
 class FavoritesProvider extends BaseProvider {

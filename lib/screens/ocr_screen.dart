@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:my_note/providers/NotesProvider.dart';
+import 'package:my_note/providers/notes_provider.dart';
 import 'package:my_note/widgets/Image_Button.dart';
 import 'package:provider/provider.dart';
 

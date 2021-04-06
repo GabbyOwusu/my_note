@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:my_note/screens/CategoryListScreen.dart';
-import 'package:my_note/widgets/CategoryItem.dart';
+import 'package:my_note/screens/category.dart';
+import 'package:my_note/widgets/category_item.dart';
 
 class CategoryScreen extends StatefulWidget {
   @override
@@ -25,7 +25,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
         ),
         title: Text(
           'Categories',
-          style: TextStyle(color: Theme.of(context).primaryColor),
+          style: TextStyle(
+            color: Theme.of(context).primaryColor,
+          ),
         ),
         actions: [
           Icon(

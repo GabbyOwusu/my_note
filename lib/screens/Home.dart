@@ -2,13 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:my_note/models/Note.dart';
-import 'package:my_note/providers/NotesProvider.dart';
-import 'package:my_note/screens/CategoryScreen.dart';
-import 'package:my_note/screens/Favorites.dart';
-import 'package:my_note/screens/Search.dart';
-import 'package:my_note/screens/Editor.dart';
-import 'package:my_note/widgets/HomeNoteItem.dart';
+import 'package:my_note/providers/notes_provider.dart';
+import 'package:my_note/screens/search.dart';
+import 'package:my_note/screens/category_screen.dart';
+import 'package:my_note/screens/editor.dart';
+import 'package:my_note/screens/favroites.dart';
 import 'package:my_note/widgets/logo.dart';
+import 'package:my_note/widgets/note_tile.dart';
 import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {

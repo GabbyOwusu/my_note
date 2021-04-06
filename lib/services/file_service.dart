@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:image_picker/image_picker.dart';
-import 'package:my_note/services/FileContract.dart';
+import 'package:my_note/services/file_contract.dart';
 import 'package:path_provider/path_provider.dart';
 
 class FileService implements FileContract {

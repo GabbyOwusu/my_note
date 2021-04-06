@@ -41,7 +41,6 @@ class _BottomControlsState extends State<BottomControls> {
           Container(
             margin: EdgeInsets.only(bottom: 30, left: 30, right: 30),
             padding: const EdgeInsets.all(5),
-            // height: 50,
             decoration: BoxDecoration(
               color: Colors.transparent,
               borderRadius: BorderRadius.circular(30),
