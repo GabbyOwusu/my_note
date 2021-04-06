@@ -34,8 +34,9 @@ dependencies:
   firebase_ml_vision: 
   image_picker: 
   local_auth: 
-  avatar_glow: 
-  flutter_sound:  
+  avatar_glow:
+  flutter_audio_recorder:   
+  
   
 
 dev_dependencies:
