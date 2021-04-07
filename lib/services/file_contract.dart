@@ -10,4 +10,6 @@ abstract class FileContract {
   Future getImage(ImageSource source);
 
   Future<String> getImagePath();
+
+  Future deletePicture(String path);
 }
