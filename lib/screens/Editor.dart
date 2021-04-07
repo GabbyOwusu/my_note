@@ -8,6 +8,7 @@ import 'package:my_note/providers/favorites_provider.dart';
 import 'package:my_note/providers/notes_provider.dart';
 import 'package:my_note/screens/show_image.dart';
 import 'package:my_note/screens/ocr_screen.dart';
+import 'package:my_note/services/audio_player.dart';
 import 'package:my_note/widgets/reocrd_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
@@ -25,7 +26,9 @@ class _WorkSpaceState extends State<WorkSpace> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   ScrollController scrollcontroller;
   DateTime now = DateTime.now();
+  PlayAudio play = PlayAudio();
   Note note = Note();
+  bool isPlaying = false;
 
   bool isChanged = false;
   bool isBold = false;
@@ -40,6 +43,12 @@ class _WorkSpaceState extends State<WorkSpace> {
     if (widget.existingNote != null) note = widget.existingNote;
     scrollcontroller = ScrollController();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    scrollcontroller.dispose();
+    super.dispose();
   }
 
   NotesProvider get provider {
@@ -253,6 +262,7 @@ class _WorkSpaceState extends State<WorkSpace> {
             controller: scrollcontroller,
             physics: BouncingScrollPhysics(),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 SizedBox(height: 10),
                 TextField(
@@ -331,6 +341,30 @@ class _WorkSpaceState extends State<WorkSpace> {
                     enabledBorder: InputBorder.none,
                   ),
                 ),
+                SizedBox(height: 30),
+                note.audioPath != null
+                    ? GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isPlaying = !isPlaying;
+                          });
+                          if (isPlaying) {
+                            play.playAudio(note.audioPath);
+                          } else {
+                            play.pauseAudio();
+                          }
+                        },
+                        child: Container(
+                          margin: const EdgeInsets.only(left: 20),
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(color: Colors.grey),
+                          ),
+                          child: Icon(Icons.music_note),
+                        ),
+                      )
+                    : SizedBox(),
                 SizedBox(height: 20),
                 note.imagePath != null
                     ? GestureDetector(
@@ -413,7 +447,7 @@ class _WorkSpaceState extends State<WorkSpace> {
                     showModalBottomSheet(
                         context: context,
                         builder: (context) {
-                          return Recording();
+                          return Recording(note: note);
                         });
                   },
                 ),
