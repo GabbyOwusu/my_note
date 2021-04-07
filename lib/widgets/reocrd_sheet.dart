@@ -1,8 +1,16 @@
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:my_note/models/Note.dart';
+import 'package:my_note/providers/notes_provider.dart';
 
 class Recording extends StatefulWidget {
-  const Recording({Key key}) : super(key: key);
+  final Note note;
+  const Recording({
+    Key key,
+    @required this.note,
+  }) : super(key: key);
 
   @override
   _RecordingState createState() => _RecordingState();
@@ -11,7 +19,9 @@ class Recording extends StatefulWidget {
 class _RecordingState extends State<Recording> {
   bool record = false;
 
-  // FlutterSound sound = FlutterSound();
+  NotesProvider get provider {
+    return Provider.of<NotesProvider>(context, listen: false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +43,9 @@ class _RecordingState extends State<Recording> {
                   onTap: () {
                     setState(() => record = !record);
                     if (record) {
-                      //TODO add recording
+                      provider.addRecording(widget.note);
                     } else {
+                      provider.stopRecording();
                       Future.delayed(Duration(milliseconds: 400), () {
                         Navigator.pop(context);
                       });
