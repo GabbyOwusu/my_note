@@ -5,7 +5,7 @@ class PlayAudio {
 
   Future<void> playAudio(String path) async {
     try {
-      await player.play(path);
+      await player.play(path, isLocal: true);
     } catch (e) {
       print('The audio cannot be played because $e');
     }
