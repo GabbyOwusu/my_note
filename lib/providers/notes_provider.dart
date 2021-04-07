@@ -61,7 +61,14 @@ class NotesProvider extends BaseProvider {
   }
 
   void addRecording(Note n) async {
-    await audioService.initRecording();
+    String audioPath = await audioService.getAudioPath();
+    n.audioPath = audioPath;
+    await audioService.record();
+    notifyListeners();
+  }
+
+  void stopRecording() async {
+    await audioService.stopRecording();
   }
 
   Future saveToStorage() async {
