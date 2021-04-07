@@ -58,4 +58,9 @@ class FileService implements FileContract {
     File imagePath = await picture.copy(dir.path + 'note-2-$diff.png');
     return imagePath.path;
   }
+
+  Future deletePicture(String path) async {
+    File picture = File(path);
+    return picture.delete();
+  }
 }
