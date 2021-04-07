@@ -36,6 +36,7 @@ dependencies:
   local_auth: 
   avatar_glow:
   flutter_audio_recorder:   
+  audioplayer: 
   
   
 
