@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:audioplayer/audioplayer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -82,6 +83,37 @@ class _WorkSpaceState extends State<WorkSpace> {
                 favsprovider.deleteFavorite(note);
                 setState(() {});
                 Navigator.pop(context, true);
+              },
+              child: Text('Delete'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future deleteImage() async {
+    return await showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Delete'),
+          content: Text(
+            'Do you really want to delete this image?',
+            style: TextStyle(color: Colors.grey),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('No'),
+            ),
+            TextButton(
+              onPressed: () {
+                provider.deleteImage(note);
+                Navigator.pop(context);
+                Navigator.pop(context);
               },
               child: Text('Delete'),
             ),
@@ -369,18 +401,15 @@ class _WorkSpaceState extends State<WorkSpace> {
                 note.imagePath != null
                     ? GestureDetector(
                         onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return ShowImage(
-                              note: note,
-                              deleteImage: () {
-                                setState(() {
-                                  note.imagePath = null;
-                                });
-                                Navigator.pop(context);
-                              },
-                            );
-                          }));
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) {
+                              return ShowImage(
+                                note: note,
+                                deleteImage: () => deleteImage(),
+                              );
+                            }),
+                          );
                         },
                         child: Hero(
                           tag: '${note.imagePath}',
@@ -419,7 +448,7 @@ class _WorkSpaceState extends State<WorkSpace> {
           decoration: BoxDecoration(
             color: Theme.of(context).scaffoldBackgroundColor,
             border: Border(
-              top: BorderSide(color: Colors.grey[100]),
+              top: BorderSide(color: Colors.grey.withOpacity(0.2)),
             ),
           ),
           child: Row(
