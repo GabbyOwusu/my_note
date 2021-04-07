@@ -10,6 +10,7 @@ import 'package:my_note/providers/notes_provider.dart';
 import 'package:my_note/screens/show_image.dart';
 import 'package:my_note/screens/ocr_screen.dart';
 import 'package:my_note/services/audio_player.dart';
+import 'package:my_note/widgets/dailogue.dart';
 import 'package:my_note/widgets/reocrd_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
@@ -28,6 +29,7 @@ class _WorkSpaceState extends State<WorkSpace> {
   ScrollController scrollcontroller;
   DateTime now = DateTime.now();
   PlayAudio play = PlayAudio();
+  MyDialogue dialogue = MyDialogue();
   Note note = Note();
   bool isPlaying = false;
 
