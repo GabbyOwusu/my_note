@@ -60,6 +60,12 @@ class NotesProvider extends BaseProvider {
     notifyListeners();
   }
 
+  void deleteImage(Note n) async {
+    await _storage.deletePicture(n.imagePath);
+    n.imagePath = null;
+    notifyListeners();
+  }
+
   void addRecording(Note n) async {
     String audioPath = await audioService.getAudioPath();
     n.audioPath = audioPath;
