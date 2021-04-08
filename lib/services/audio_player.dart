@@ -11,8 +11,12 @@ class PlayAudio {
     }
   }
 
-  Future<void> pauseAudio() async {
+  Future<void> stopAudio() async {
     await player.stop();
+  }
+
+  Future<void> pauseAudio() async {
+    await player.pause();
   }
 
   Future<void> seek() async {}
