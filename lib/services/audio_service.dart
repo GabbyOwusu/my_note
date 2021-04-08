@@ -10,7 +10,7 @@ class AudioService {
   Future<String> getAudioPath() async {
     Directory directory = await getApplicationDocumentsDirectory();
     DateTime diff = DateTime.now();
-    String audiopath = directory.path + 'note-2-audi-$diff.mp4';
+    String audiopath = directory.path + '/note-2-audi-$diff.mp4';
     return audiopath;
   }
 
