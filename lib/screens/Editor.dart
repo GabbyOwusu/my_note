@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:audioplayer/audioplayer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
@@ -11,6 +10,7 @@ import 'package:my_note/screens/show_image.dart';
 import 'package:my_note/screens/ocr_screen.dart';
 import 'package:my_note/services/audio_player.dart';
 import 'package:my_note/widgets/dailogue.dart';
+import 'package:my_note/widgets/play_audio.dart';
 import 'package:my_note/widgets/reocrd_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
@@ -379,23 +379,35 @@ class _WorkSpaceState extends State<WorkSpace> {
                 note.audioPath != null
                     ? GestureDetector(
                         onTap: () {
-                          setState(() {
-                            isPlaying = !isPlaying;
-                          });
-                          if (isPlaying) {
-                            play.playAudio(note.audioPath);
-                          } else {
-                            play.pauseAudio();
-                          }
+                          showModalBottomSheet(
+                              context: context,
+                              builder: (context) {
+                                return Play(
+                                  color: note.indicator ?? Colors.purple,
+                                );
+                              });
+                          // setState(() {
+                          //   isPlaying = !isPlaying;
+                          // });
+                          // if (isPlaying) {
+                          //   play.playAudio(note.audioPath);
+                          // } else {
+                          //   play.pauseAudio();
+                          // }
                         },
                         child: Container(
                           margin: const EdgeInsets.only(left: 20),
                           padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            border: Border.all(color: Colors.grey),
+                            border: Border.all(
+                              color: note.indicator ?? Colors.purple,
+                            ),
                           ),
-                          child: Icon(Icons.music_note),
+                          child: Icon(
+                            Icons.music_note,
+                            color: note.indicator ?? Colors.purple,
+                          ),
                         ),
                       )
                     : SizedBox(),
@@ -416,7 +428,6 @@ class _WorkSpaceState extends State<WorkSpace> {
                         child: Hero(
                           tag: '${note.imagePath}',
                           child: Container(
-                            // height: 600,
                             margin: EdgeInsets.all(20),
                             alignment: Alignment.bottomLeft,
                             decoration: BoxDecoration(
@@ -478,7 +489,10 @@ class _WorkSpaceState extends State<WorkSpace> {
                     showModalBottomSheet(
                         context: context,
                         builder: (context) {
-                          return Recording(note: note);
+                          return Recording(
+                            note: note,
+                            color: note.indicator ?? Colors.purple,
+                          );
                         });
                   },
                 ),
