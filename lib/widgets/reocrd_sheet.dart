@@ -7,9 +7,11 @@ import 'package:my_note/providers/notes_provider.dart';
 
 class Recording extends StatefulWidget {
   final Note note;
+  final Color color;
   const Recording({
     Key key,
     @required this.note,
+    @required this.color,
   }) : super(key: key);
 
   @override
@@ -26,16 +28,14 @@ class _RecordingState extends State<Recording> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 800,
       child: Center(
         child: SingleChildScrollView(
           child: Column(
-            mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               AvatarGlow(
                 repeatPauseDuration: Duration(milliseconds: 20),
-                glowColor: Colors.purple,
+                glowColor: widget.color,
                 repeat: record,
                 animate: record,
                 endRadius: 150,
@@ -55,7 +55,7 @@ class _RecordingState extends State<Recording> {
                     height: 120,
                     width: 120,
                     decoration: BoxDecoration(
-                      color: Colors.purple,
+                      color: widget.color ?? Colors.purple,
                       shape: BoxShape.circle,
                       border: Border.all(color: Colors.white, width: 3),
                     ),
@@ -69,7 +69,7 @@ class _RecordingState extends State<Recording> {
                   ),
                 ),
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 10),
               Text(
                 record ? 'Recording...' : 'Record',
                 style: TextStyle(
