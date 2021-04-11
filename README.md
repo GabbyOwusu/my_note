@@ -8,6 +8,7 @@ A personal notes app for taking notes and making memos.
 - Can read text from images
 - Voice notes
 - Adding picture to notes.
+- Locking note with biometrics
 - Format highlighted text (In oprogress)
 
 
