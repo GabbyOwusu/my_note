@@ -59,8 +59,16 @@ class FileService implements FileContract {
     return imagePath.path;
   }
 
-  Future deletePicture(String path) async {
+  @override
+  Future deleteFile(String path) async {
     File picture = File(path);
     return picture.delete();
   }
+
+  // Future<String> getAudioPath() async {
+  //   Directory directory = await getApplicationDocumentsDirectory();
+  //   DateTime diff = DateTime.now();
+  //   String audiopath = directory.path + '/note-2-audio-$diff.mp4';
+  //   return audiopath;
+  // }
 }
