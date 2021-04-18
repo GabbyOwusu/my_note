@@ -6,7 +6,7 @@ A personal notes app for taking notes and making memos.
 
 - Speech-to-text
 - Can read text from images
-- Voice notes
+- Voice notes (with playback) - in progress.
 - Adding picture to notes.
 - Locking note with biometrics
 - Format highlighted text (In oprogress)
