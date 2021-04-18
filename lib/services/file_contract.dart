@@ -11,5 +11,5 @@ abstract class FileContract {
 
   Future<String> getImagePath();
 
-  Future deletePicture(String path);
+  Future deleteFile(String path);
 }
