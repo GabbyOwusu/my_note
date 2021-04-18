@@ -3,14 +3,16 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:audioplayers/audioplayers.dart';
+
 import 'package:my_note/models/Note.dart';
 import 'package:my_note/providers/favorites_provider.dart';
 import 'package:my_note/providers/notes_provider.dart';
 import 'package:my_note/screens/show_image.dart';
 import 'package:my_note/screens/ocr_screen.dart';
 import 'package:my_note/services/audio_player.dart';
-import 'package:my_note/widgets/dailogue.dart';
-import 'package:my_note/widgets/play_audio.dart';
+// import 'package:my_note/widgets/dailogue.dart';
+import 'package:my_note/widgets/audio_controls.dart';
 import 'package:my_note/widgets/reocrd_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:share/share.dart';
@@ -29,14 +31,9 @@ class _WorkSpaceState extends State<WorkSpace> {
   ScrollController scrollcontroller;
   DateTime now = DateTime.now();
   PlayAudio play = PlayAudio();
-  MyDialogue dialogue = MyDialogue();
+  // MyDialogue dialogue = MyDialogue();
   Note note = Note();
   bool isPlaying = false;
-
-  bool isChanged = false;
-  bool isBold = false;
-  bool isItalic = false;
-  bool isUnderlined = false;
   bool isRecording = false;
   Color pickerColor = Color(0xff443a49);
   Color currentColor = Color(0xff443a49);
@@ -45,6 +42,7 @@ class _WorkSpaceState extends State<WorkSpace> {
   void initState() {
     if (widget.existingNote != null) note = widget.existingNote;
     scrollcontroller = ScrollController();
+
     super.initState();
   }
 
@@ -301,7 +299,6 @@ class _WorkSpaceState extends State<WorkSpace> {
                 SizedBox(height: 10),
                 TextField(
                   onChanged: (val) {
-                    isChanged = !isChanged;
                     note.title = val;
                     note.date = DateTime.now();
                   },
@@ -353,7 +350,7 @@ class _WorkSpaceState extends State<WorkSpace> {
                   enableInteractiveSelection: true,
                   onChanged: (val) {
                     note.text = val;
-                    isChanged = !isChanged;
+
                     note.date = DateTime.now();
                   },
                   controller: TextEditingController(text: note.text),
@@ -382,18 +379,14 @@ class _WorkSpaceState extends State<WorkSpace> {
                           showModalBottomSheet(
                               context: context,
                               builder: (context) {
-                                return Play(
+                                return AudioControls(
                                   color: note.indicator ?? Colors.purple,
+                                  playFunction: () {},
+                                  onSliderChanged: (val) {},
+                                  playing: isPlaying,
+                                  stopFunction: () {},
                                 );
                               });
-                          // setState(() {
-                          //   isPlaying = !isPlaying;
-                          // });
-                          // if (isPlaying) {
-                          //   play.playAudio(note.audioPath);
-                          // } else {
-                          //   play.pauseAudio();
-                          // }
                         },
                         child: Container(
                           margin: const EdgeInsets.only(left: 20),
