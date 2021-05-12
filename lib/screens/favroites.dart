@@ -58,14 +58,14 @@ class _FavoritesState extends State<Favorites> {
         title: Text(
           'Favorites',
           style: TextStyle(
-            fontSize: 23,
+            fontSize: 20,
             fontWeight: FontWeight.w600,
             color: Theme.of(context).primaryColor,
           ),
         ),
         leading: IconButton(
             icon: Icon(
-              Icons.arrow_back,
+              Icons.arrow_back_ios,
               color: Theme.of(context).primaryColor,
             ),
             onPressed: () {
@@ -91,21 +91,25 @@ class _FavoritesState extends State<Favorites> {
               physics: BouncingScrollPhysics(),
               child: Padding(
                 padding: EdgeInsets.only(left: 20, right: 20, top: 30),
-                child: StaggeredGridView.countBuilder(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 12,
-                    crossAxisSpacing: 12,
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: provider.favs?.length,
-                    itemBuilder: (context, index) {
-                      return HomeNoteItem(
-                        note: provider.favs[index],
-                      );
-                    },
-                    staggeredTileBuilder: (int index) {
-                      return StaggeredTile.fit(isActive ? 1 : 2);
-                    }),
+                child: Column(
+                  children: [
+                    StaggeredGridView.countBuilder(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 12,
+                        crossAxisSpacing: 12,
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: provider.favs?.length,
+                        itemBuilder: (context, index) {
+                          return HomeNoteItem(
+                            note: provider.favs[index],
+                          );
+                        },
+                        staggeredTileBuilder: (int index) {
+                          return StaggeredTile.fit(isActive ? 1 : 2);
+                        }),
+                  ],
+                ),
               ),
             ),
     );
