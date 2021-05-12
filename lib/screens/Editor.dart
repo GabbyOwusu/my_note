@@ -10,8 +10,6 @@ import 'package:my_note/providers/favorites_provider.dart';
 import 'package:my_note/providers/notes_provider.dart';
 import 'package:my_note/screens/show_image.dart';
 import 'package:my_note/screens/ocr_screen.dart';
-import 'package:my_note/services/audio_player.dart';
-// import 'package:my_note/widgets/dailogue.dart';
 import 'package:my_note/widgets/audio_controls.dart';
 import 'package:my_note/widgets/reocrd_sheet.dart';
 import 'package:provider/provider.dart';
@@ -30,8 +28,8 @@ class _WorkSpaceState extends State<WorkSpace> {
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   ScrollController scrollcontroller;
   DateTime now = DateTime.now();
-  PlayAudio play = PlayAudio();
-  // MyDialogue dialogue = MyDialogue();
+  AudioPlayer player;
+  // PlayAudio audio = PlayAudio();
   Note note = Note();
   bool isPlaying = false;
   bool isRecording = false;
@@ -42,13 +40,14 @@ class _WorkSpaceState extends State<WorkSpace> {
   void initState() {
     if (widget.existingNote != null) note = widget.existingNote;
     scrollcontroller = ScrollController();
-
+    player = AudioPlayer();
     super.initState();
   }
 
   @override
   void dispose() {
     scrollcontroller.dispose();
+    player.dispose();
     super.dispose();
   }
 
@@ -182,7 +181,17 @@ class _WorkSpaceState extends State<WorkSpace> {
                 pickerAreaBorderRadius: BorderRadius.circular(8),
                 pickerColor: pickerColor,
                 onColorChanged: (color) {
-                  setState(() => note.indicator = color);
+                  setState(() {
+                    if (color == Color(0xffffffff) ||
+                        color == Color(0xff000000)) {
+                      note.indicator = Colors.purple;
+                    } else {
+                      setState(() {
+                        note.indicator = color;
+                      });
+                    }
+                  });
+                  // print(color);
                 },
                 showLabel: true,
                 pickerAreaHeightPercent: 0.8,
@@ -243,7 +252,7 @@ class _WorkSpaceState extends State<WorkSpace> {
                       icon: Icon(
                         Icons.bookmark_border,
                         size: 25,
-                        color: Theme.of(context).primaryColor,
+                        color: note.indicator ?? Colors.purple,
                       ),
                     ),
                   )
@@ -259,7 +268,7 @@ class _WorkSpaceState extends State<WorkSpace> {
                       icon: Icon(
                         Icons.bookmark,
                         size: 25,
-                        color: Theme.of(context).primaryColor,
+                        color: note.indicator ?? Colors.purple,
                       ),
                     ),
                   ),
@@ -325,7 +334,7 @@ class _WorkSpaceState extends State<WorkSpace> {
                   child: Row(
                     children: [
                       Text(
-                        'Uncategorized',
+                        'Customize',
                         style: TextStyle(
                           color: Colors.grey,
                         ),
@@ -381,10 +390,17 @@ class _WorkSpaceState extends State<WorkSpace> {
                               builder: (context) {
                                 return AudioControls(
                                   color: note.indicator ?? Colors.purple,
-                                  playFunction: () {},
+                                  playFunction: () async {
+                                    await player.play(
+                                      note.audioPath,
+                                      isLocal: true,
+                                    );
+                                  },
                                   onSliderChanged: (val) {},
                                   playing: isPlaying,
-                                  stopFunction: () {},
+                                  stopFunction: () {
+                                    player.stop();
+                                  },
                                 );
                               });
                         },
@@ -395,6 +411,7 @@ class _WorkSpaceState extends State<WorkSpace> {
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: note.indicator ?? Colors.purple,
+                              width: 2,
                             ),
                           ),
                           child: Icon(
