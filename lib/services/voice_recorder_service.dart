@@ -1,22 +1,24 @@
 import 'dart:io';
 
 import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
+import 'package:my_note/models/Note.dart';
 import 'package:path_provider/path_provider.dart';
 
 class VoiceRecordingService {
   Future<bool> haspermissions = FlutterAudioRecorder.hasPermissions;
   FlutterAudioRecorder recorder;
 
-  Future<String> getAudioPath() async {
+  Future<String> getAudioPath(Note note) async {
     Directory directory = await getApplicationDocumentsDirectory();
     DateTime diff = DateTime.now();
-    String audiopath = directory.path + '/note-2-audio-$diff.mp4';
+    String audiopath = directory.path + '/note-2-audio-$diff';
+    note.audioPath = audiopath;
     return audiopath;
   }
 
-  Future initRecording() async {
-    String dir = await getAudioPath();
-    recorder = FlutterAudioRecorder(dir);
+  Future initRecording(Note n) async {
+    String dir = await getAudioPath(n);
+    recorder = FlutterAudioRecorder(dir, audioFormat: AudioFormat.AAC);
     await recorder.initialized;
   }
 
@@ -28,10 +30,11 @@ class VoiceRecordingService {
     await recorder.stop();
   }
 
-  Future<void> record() async {
+  Future<void> record(Note note) async {
     try {
       if (await haspermissions) {
-        await initRecording();
+        await initRecording(note);
+        print('Path here ${note.audioPath}');
         await startRecording();
       } else {
         return;
