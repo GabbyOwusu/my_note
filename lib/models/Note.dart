@@ -16,7 +16,7 @@ class Note {
     this.date,
     this.locked = false,
     this.isFavorite = false,
-    this.indicator,
+    this.indicator = Colors.purple,
     this.imagePath,
     this.audioPath,
   });
@@ -46,7 +46,7 @@ class Note {
       "text": text,
       "date": date?.toString(),
       "locked": locked,
-      "indiator": indicator,
+      "indiator": indicator.toString(),
       "imagePath": imagePath,
       "isFavorite": isFavorite,
       "audioPath": audioPath,
