@@ -1,8 +1,11 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:my_note/providers/category_provider.dart';
-import 'package:my_note/providers/favorites_provider.dart';
 import 'package:my_note/providers/notes_provider.dart';
-import 'package:my_note/screens/splahscreen.dart';
+import 'package:my_note/ui/home.dart';
+import 'package:my_note/ui/note_editor.dart';
+import 'package:my_note/ui/splahscreen.dart';
 import 'package:my_note/services/sl.dart';
 import 'package:provider/provider.dart';
 
@@ -19,9 +22,6 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => NotesProvider()..readFromStorage(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => FavoritesProvider()..readFromStorage(),
         ),
         ChangeNotifierProvider(
           create: (context) => CategoryProvider(),
@@ -60,11 +60,11 @@ class MyApp extends StatelessWidget {
           }),
         ),
         home: Splash(),
-        // routes: {
-        //   '/home': (BuildContext context) => MyHomePage(),
-        //   '/lockscreen': (BuildContext context) => LockScreen(),
-        //   '/workspace': (BuildContext context) => WorkSpace(),
-        // },
+        routes: {
+          '/home': (BuildContext context) => MyHomePage(),
+          // '/lockscreen': (BuildContext context) => LockScreen(note:),
+          '/workspace': (BuildContext context) => NoteEditor(),
+        },
       ),
     );
   }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:my_note/providers/favorites_provider.dart';
 import 'package:my_note/widgets/note_tile.dart';
 import 'package:provider/provider.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
@@ -13,10 +12,6 @@ class Favorites extends StatefulWidget {
 
 class _FavoritesState extends State<Favorites> {
   bool isActive = false;
-
-  FavoritesProvider get provider {
-    return Provider.of<FavoritesProvider>(context, listen: false);
-  }
 
   Future<bool?> _showDialog() async {
     return await showDialog<bool>(
@@ -37,7 +32,6 @@ class _FavoritesState extends State<Favorites> {
             ),
             TextButton(
               onPressed: () {
-                provider.clearFavorites();
                 setState(() {});
                 Navigator.pop(context, true);
               },
@@ -51,7 +45,6 @@ class _FavoritesState extends State<Favorites> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FavoritesProvider>().favs;
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
@@ -87,31 +80,29 @@ class _FavoritesState extends State<Favorites> {
           )
         ],
       ),
-      body: provider.favs.length == 0
-          ? Center(child: Text('Your favorite notes will appear here'))
-          : SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Padding(
-                padding: EdgeInsets.only(left: 20, right: 20, top: 30),
-                child: Column(
-                  children: [
-                    StaggeredGridView.countBuilder(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 12,
-                        crossAxisSpacing: 12,
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: provider.favs.length,
-                        itemBuilder: (context, index) {
-                          return NoteTile(note: provider.favs[index]);
-                        },
-                        staggeredTileBuilder: (int index) {
-                          return StaggeredTile.fit(isActive ? 1 : 2);
-                        }),
-                  ],
-                ),
-              ),
-            ),
+      body: SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+        child: Padding(
+          padding: EdgeInsets.only(left: 20, right: 20, top: 30),
+          child: Column(
+            children: [
+              // StaggeredGridView.countBuilder(
+              //     crossAxisCount: 2,
+              //     mainAxisSpacing: 12,
+              //     crossAxisSpacing: 12,
+              //     shrinkWrap: true,
+              //     physics: NeverScrollableScrollPhysics(),
+              //     itemCount: provider.favs.length,
+              //     itemBuilder: (context, index) {
+              //       return NoteTile(note: provider.favs[index]);
+              //     },
+              //     staggeredTileBuilder: (int index) {
+              //       return StaggeredTile.fit(isActive ? 1 : 2);
+              //     }),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

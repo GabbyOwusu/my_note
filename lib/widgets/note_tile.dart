@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:my_note/models/Note.dart';
-import 'package:my_note/screens/lock_screen.dart';
-import 'package:my_note/screens/note_editor.dart';
+import 'package:my_note/ui/lock_screen.dart';
+import 'package:my_note/ui/note_editor.dart';
+import 'package:my_note/utils/utils.dart';
 
 class NoteTile extends StatelessWidget {
   final Note note;
@@ -81,8 +82,8 @@ class NoteTile extends StatelessWidget {
               alignment: Alignment.bottomRight,
               child: Text(
                 note.date == now
-                    ? 'Created at ${now.day}-${now.month}-${now.year}'
-                    : 'Last Edited : ${note.date?.day}/${note.date?.month}/${note.date?.year}',
+                    ? 'Created at ${formatDate(now)}'
+                    : 'Last Edited ${formatDate(note.date)}',
                 style: TextStyle(
                   color: Colors.grey,
                   fontSize: 11,

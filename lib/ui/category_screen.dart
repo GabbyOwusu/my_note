@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_note/screens/category.dart';
+import 'package:my_note/ui/category.dart';
 import 'package:my_note/widgets/category_item.dart';
 
 class CategoryScreen extends StatefulWidget {

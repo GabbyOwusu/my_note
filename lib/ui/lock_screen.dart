@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_note/models/Note.dart';
-import 'package:my_note/screens/note_editor.dart';
+import 'package:my_note/ui/note_editor.dart';
 import 'package:my_note/services/local_auth_service.dart';
 
 class LockScreen extends StatefulWidget {

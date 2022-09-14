@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:my_note/models/Note.dart';
 import 'package:my_note/providers/base_provider.dart';
-import 'package:my_note/services/file_contract.dart';
+import 'package:my_note/services/hive_service.dart';
 import 'package:my_note/services/sl.dart';
 
 class NotesProvider extends BaseProvider {
@@ -13,7 +13,7 @@ class NotesProvider extends BaseProvider {
   List<Note> get notes => _notesList.reversed.toList();
   String get extracted => _extractedText;
 
-  final _storage = sl.get<FileContract>();
+  final _storage = sl.get<HiveService>();
 
   void addNote(Note n) {
     if ((n.title ?? '').isEmpty && (n.text ?? '').isEmpty) return;
@@ -47,16 +47,16 @@ class NotesProvider extends BaseProvider {
     saveToStorage();
   }
 
-  void deleteImage(Note n) async {
-    await _storage.deleteFile(n.imagePath!);
-    n.imagePath = null;
-    notifyListeners();
-  }
+  // void deleteImage(Note n) async {
+  //   await _storage.deleteFile(n.imagePath!);
+  //   n.imagePath = null;
+  //   notifyListeners();
+  // }
 
-  Future<bool?> saveToStorage() async {
+  Future<void> saveToStorage() async {
     try {
       final list = Note.toJSONList(_notesList);
-      return await _storage.writeFile(jsonEncode(list), '/mynotes.txt');
+      await _storage.saveNotes(jsonEncode(list));
     } catch (e) {
       print('Failed to save $e');
       return null;
@@ -65,7 +65,7 @@ class NotesProvider extends BaseProvider {
 
   Future<void> readFromStorage() async {
     try {
-      final data = await _storage.readFile('/mynotes.txt');
+      final data = await _storage.readNotes();
       if (data != null) {
         final decoded = jsonDecode(data);
         final list = List<Map<String, dynamic>>.from(decoded);

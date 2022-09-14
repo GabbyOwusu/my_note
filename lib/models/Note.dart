@@ -11,12 +11,11 @@ class Note {
   String? audioPath;
 
   Note({
-    this.title = '',
-    this.text = '',
+    this.title,
+    this.text,
     this.date,
     this.locked = false,
     this.isFavorite = false,
-    // this.indicator = Colors.purple,
     this.imagePath,
     this.audioPath,
   });
@@ -27,7 +26,6 @@ class Note {
       text: json["text"],
       date: DateTime.tryParse(json["date"]),
       locked: json["locked"],
-      // indicator: json["indicator"],
       imagePath: json["imagePath"],
       isFavorite: json["isFavorite"],
       audioPath: json["audioPath"],

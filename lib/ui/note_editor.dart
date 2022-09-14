@@ -4,13 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:my_note/models/Note.dart';
-import 'package:my_note/providers/favorites_provider.dart';
 import 'package:my_note/providers/notes_provider.dart';
-import 'package:my_note/screens/show_image.dart';
-import 'package:my_note/screens/ocr_screen.dart';
+import 'package:my_note/ui/show_image.dart';
+import 'package:my_note/ui/ocr_screen.dart';
 
 import 'package:my_note/widgets/reocrd_sheet.dart';
 import 'package:provider/provider.dart';
+
+import '../utils/utils.dart';
 
 class NoteEditor extends StatefulWidget {
   final Note? existingNote;
@@ -49,10 +50,6 @@ class _NoteEditorState extends State<NoteEditor> {
     return Provider.of<NotesProvider>(context, listen: false);
   }
 
-  FavoritesProvider get favsprovider {
-    return Provider.of<FavoritesProvider>(context, listen: false);
-  }
-
   Future<bool?> _showDialog() async {
     return await showDialog<bool>(
       context: context,
@@ -73,7 +70,6 @@ class _NoteEditorState extends State<NoteEditor> {
             TextButton(
               onPressed: () {
                 provider.deleteNote(note);
-                favsprovider.deleteFavorite(note);
                 Navigator.pop(context, true);
               },
               child: Text('Delete'),
@@ -103,8 +99,6 @@ class _NoteEditorState extends State<NoteEditor> {
             ),
             TextButton(
               onPressed: () {
-                provider.deleteImage(note);
-                Navigator.pop(context);
                 Navigator.pop(context);
               },
               child: Text('Delete'),
@@ -231,9 +225,7 @@ class _NoteEditorState extends State<NoteEditor> {
               ? Padding(
                   padding: EdgeInsets.all(8),
                   child: IconButton(
-                    onPressed: () {
-                      setState(() => favsprovider.favorite(note));
-                    },
+                    onPressed: () {},
                     icon: Icon(
                       Icons.bookmark_border,
                       size: 25,
@@ -245,9 +237,7 @@ class _NoteEditorState extends State<NoteEditor> {
                   padding: const EdgeInsets.all(8.0),
                   child: IconButton(
                     onPressed: () {
-                      setState(() {
-                        favsprovider.deleteFavorite(note);
-                      });
+                      setState(() {});
                     },
                     icon: Icon(
                       Icons.bookmark,
@@ -344,7 +334,6 @@ class _NoteEditorState extends State<NoteEditor> {
                 enableInteractiveSelection: true,
                 onChanged: (val) {
                   note.text = val;
-
                   note.date = DateTime.now();
                 },
                 controller: TextEditingController(text: note.text),
@@ -439,8 +428,8 @@ class _NoteEditorState extends State<NoteEditor> {
                   padding: EdgeInsets.only(right: 20),
                   child: Text(
                     note.date == null
-                        ? '${now.day}/${now.month}/${now.year}'
-                        : '${note.date?.day}/${note.date?.month}/${note.date?.year}',
+                        ? 'Created at ${formatDate(now)}'
+                        : 'Last Edited ${formatDate(note.date)}',
                     style: TextStyle(color: Colors.grey),
                   ),
                 ),
