@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class ImageButton extends StatelessWidget {
-  final String title;
-  final IconData icon;
-  final Color color;
-  final Color textColor;
-  final Function ontapped;
+  final String? title;
+  final IconData? icon;
+  final Color? color;
+  final Color? textColor;
+  final void Function()? ontapped;
 
   const ImageButton({
     this.title,
@@ -18,7 +18,7 @@ class ImageButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: ontapped,
+      onTap: () {},
       child: Container(
         margin: EdgeInsets.only(left: 20, right: 20, bottom: 10),
         height: 50,
@@ -30,7 +30,7 @@ class ImageButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              title,
+              "$title",
               style: TextStyle(
                 color: textColor,
                 fontWeight: FontWeight.w600,

@@ -12,7 +12,7 @@ class FavoritesProvider extends BaseProvider {
   final _storage = sl.get<FileContract>();
 
   void favorite(Note n) {
-    if (n.title.isEmpty && n.text.isEmpty) return;
+    if ((n.title ?? '').isEmpty && (n.text ?? '').isEmpty) return;
     _favorites.add(n);
     n.isFavorite = true;
     saveToStorage();
@@ -47,11 +47,12 @@ class FavoritesProvider extends BaseProvider {
   Future<void> readFromStorage() async {
     try {
       final json = await _storage.readFile('/myfavorites.txt');
-      if (json == null || json.isEmpty) return '';
-      final list = await jsonDecode(json).cast<Map<String, dynamic>>();
-      _favorites = Note.fromJSONList(list).toList();
-      print('favoritenotelist here $_favorites');
-      notifyListeners();
+      if (json != null) {
+        final list = await jsonDecode(json).cast<Map<String, dynamic>>();
+        _favorites = Note.fromJSONList(list);
+        print('favoritenotelist here $_favorites');
+        notifyListeners();
+      }
     } catch (e) {
       print('Error here $e');
     }

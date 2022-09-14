@@ -9,12 +9,12 @@ class AudioControls extends StatefulWidget {
   final void Function(double) onSliderChanged;
 
   const AudioControls({
-    Key key,
-    this.color,
-    @required this.playFunction,
-    @required this.stopFunction,
-    @required this.playing,
-    @required this.onSliderChanged,
+    Key? key,
+    required this.color,
+    required this.playFunction,
+    required this.stopFunction,
+    required this.playing,
+    required this.onSliderChanged,
   }) : super(key: key);
   @override
   _AudioControls createState() => _AudioControls();
@@ -78,7 +78,7 @@ class _AudioControls extends State<AudioControls> {
             IconButton(
               icon: Icon(widget.playing ? Icons.pause : Icons.play_arrow),
               iconSize: 80,
-              onPressed: widget.playFunction,
+              onPressed: () {},
             ),
             IconButton(
               icon: Icon(Icons.skip_next),

@@ -1,15 +1,17 @@
-import 'package:flutter/cupertino.dart';
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:my_note/models/Note.dart';
 import 'package:my_note/providers/notes_provider.dart';
+import 'package:my_note/screens/note_editor.dart';
 import 'package:my_note/screens/search.dart';
 import 'package:my_note/screens/category_screen.dart';
-import 'package:my_note/screens/editor.dart';
 import 'package:my_note/screens/favroites.dart';
 import 'package:my_note/widgets/logo.dart';
 import 'package:my_note/widgets/note_tile.dart';
 import 'package:provider/provider.dart';
+import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
+import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -17,88 +19,21 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  Note note;
+  Note note = Note();
   bool isActive = true;
-
-  NotesProvider get provider {
-    return Provider.of<NotesProvider>(context);
-  }
-
-  final GlobalKey<ScaffoldState> _key = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final provider = context.watch<NotesProvider>();
+    final notes = provider.notes;
+
     return Scaffold(
-      key: _key,
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            DrawerHeader(
-              child: Text('Username'),
-            ),
-            ListTile(
-              leading: Text(
-                'Settings',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              trailing: Icon(
-                Icons.settings,
-                color: Colors.black,
-              ),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: Text(
-                'Settings',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              trailing: Icon(
-                Icons.settings,
-                color: Colors.black,
-              ),
-              onTap: () {},
-            ),
-            Divider(),
-            Container(
-              alignment: Alignment.bottomCenter,
-              child: ListTile(
-                leading: Text(
-                  'Sign in with Google',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                trailing: Icon(
-                  Icons.link,
-                  color: Colors.black,
-                ),
-                onTap: () {},
-              ),
-            )
-          ],
-        ),
-      ),
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        backgroundColor: theme.scaffoldBackgroundColor,
         elevation: 0,
         centerTitle: false,
-        // leading: IconButton(
-        //   onPressed: () {
-        //     _key.currentState.openDrawer();
-        //   },
-        //   icon: Icon(
-        //     Icons.menu,
-        //     color: Theme.of(context).primaryColor,
-        //   ),
-        // ),
         title: Logo(),
         actions: [
           Padding(
@@ -106,13 +41,16 @@ class _MyHomePageState extends State<MyHomePage> {
             child: IconButton(
                 icon: Icon(
                   Icons.bookmark,
-                  color: Theme.of(context).primaryColor,
+                  color: theme.primaryColor,
                   size: 30,
                 ),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) {
-                    return Favorites();
-                  }));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => Favorites(),
+                    ),
+                  );
                 }),
           ),
           Padding(
@@ -120,15 +58,13 @@ class _MyHomePageState extends State<MyHomePage> {
             child: IconButton(
               icon: Image.asset(
                 'images/grid.png',
-                color: Theme.of(context).primaryColor,
+                color: theme.primaryColor,
               ),
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) {
-                      return CategoryScreen();
-                    },
+                    builder: (context) => CategoryScreen(),
                   ),
                 );
               },
@@ -136,104 +72,95 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
       ),
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: theme.scaffoldBackgroundColor,
       body: SafeArea(
-          child: provider.notes.isNotEmpty
+          child: notes.isNotEmpty
               ? SingleChildScrollView(
+                  padding: EdgeInsets.only(
+                    left: 20,
+                    right: 30,
+                    top: 20,
+                  ),
                   physics: BouncingScrollPhysics(),
                   child: Column(
                     children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left: 20,
-                          right: 30,
-                          top: 20,
-                        ),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) {
-                                      return SearchPage();
-                                    }),
-                                  );
-                                },
-                                child: Container(
-                                  height: 42,
-                                  padding: EdgeInsets.only(left: 20, right: 30),
-                                  decoration: BoxDecoration(
-                                    color:
-                                        Theme.of(context).unselectedWidgetColor,
-                                    borderRadius: BorderRadius.circular(7),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.search,
-                                        color: Colors.grey,
-                                        size: 15,
-                                      ),
-                                      SizedBox(width: 10),
-                                      Text(
-                                        'Search notes',
-                                        style: TextStyle(
-                                          fontSize: 17,
-                                          color: Colors.grey,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: 10),
-                            GestureDetector(
+                      Row(
+                        children: [
+                          Expanded(
+                            child: GestureDetector(
                               onTap: () {
-                                setState(() {
-                                  isActive = !isActive;
-                                });
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) {
+                                    return SearchPage();
+                                  }),
+                                );
                               },
                               child: Container(
                                 height: 42,
-                                width: 42,
+                                padding: EdgeInsets.only(left: 20, right: 30),
                                 decoration: BoxDecoration(
-                                  color:
-                                      Theme.of(context).unselectedWidgetColor,
+                                  color: theme.unselectedWidgetColor,
                                   borderRadius: BorderRadius.circular(7),
                                 ),
-                                child: Center(
-                                  child: Icon(
-                                    isActive ? Icons.menu : Icons.grid_on,
-                                    color: Theme.of(context).primaryColor,
-                                  ),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      Icons.search,
+                                      color: Colors.grey,
+                                      size: 15,
+                                    ),
+                                    SizedBox(width: 10),
+                                    Text(
+                                      'Search notes',
+                                      style: TextStyle(
+                                        fontSize: 17,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            )
-                          ],
-                        ),
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isActive = !isActive;
+                              });
+                            },
+                            child: Container(
+                              height: 42,
+                              width: 42,
+                              decoration: BoxDecoration(
+                                color: theme.unselectedWidgetColor,
+                                borderRadius: BorderRadius.circular(7),
+                              ),
+                              child: Center(
+                                child: Icon(
+                                  isActive ? Icons.menu : Icons.grid_on,
+                                  color: theme.primaryColor,
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
                       ),
                       SizedBox(height: 20),
-                      Padding(
-                        padding: EdgeInsets.only(left: 20, right: 20, top: 10),
-                        child: StaggeredGridView.countBuilder(
-                            crossAxisCount: 2,
-                            mainAxisSpacing: 12,
-                            crossAxisSpacing: 12,
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: provider.notes?.length,
-                            itemBuilder: (context, index) {
-                              return HomeNoteItem(
-                                note: provider.notes[index],
-                              );
-                            },
-                            staggeredTileBuilder: (int index) {
-                              return StaggeredTile.fit(isActive ? 1 : 2);
-                            }),
-                      ),
+                      StaggeredGridView.countBuilder(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 12,
+                          crossAxisSpacing: 12,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemCount: provider.notes.length,
+                          itemBuilder: (context, index) {
+                            return NoteTile(note: provider.notes[index]);
+                          },
+                          staggeredTileBuilder: (int index) {
+                            return StaggeredTile.fit(isActive ? 1 : 2);
+                          }),
                     ],
                   ),
                 )
@@ -243,7 +170,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
                       Image.asset(
                         'images/notes_icon.png',
-                        color: Theme.of(context).primaryColor,
+                        color: theme.primaryColor,
                       ),
                       SizedBox(height: 10),
                       Text(
@@ -257,12 +184,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 )),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).buttonColor,
+        backgroundColor: theme.buttonColor,
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) {
-              return WorkSpace();
+              return NoteEditor();
             }),
           );
         },
@@ -270,7 +197,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Image.asset(
             'images/edit.png',
             width: 20,
-            color: Theme.of(context).scaffoldBackgroundColor,
+            color: theme.scaffoldBackgroundColor,
           ),
         ),
       ),

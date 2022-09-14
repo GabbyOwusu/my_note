@@ -8,11 +8,13 @@ class LocalAuthService {
         await auth.getAvailableBiometrics();
     try {
       if (availableBiometrics.contains(BiometricType.fingerprint)) {
-        return auth.authenticateWithBiometrics(
+        return auth.authenticate(
           localizedReason: 'Use biometrics to unlock note',
-          useErrorDialogs: true,
-          stickyAuth: true,
-          sensitiveTransaction: true,
+          options: AuthenticationOptions(
+            useErrorDialogs: true,
+            stickyAuth: true,
+            sensitiveTransaction: true,
+          ),
         );
       }
     } catch (e) {

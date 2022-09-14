@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:my_note/models/Note.dart';
-import 'package:my_note/screens/editor.dart';
+import 'package:my_note/screens/note_editor.dart';
 import 'package:my_note/services/local_auth_service.dart';
 
 class LockScreen extends StatefulWidget {
   final Note note;
 
-  const LockScreen({Key key, this.note}) : super(key: key);
+  const LockScreen({Key? key, required this.note}) : super(key: key);
   @override
   _LockScreenState createState() => _LockScreenState();
 }
@@ -86,10 +86,12 @@ class _LockScreenState extends State<LockScreen> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: pinCode.text.length != 4 ? Colors.grey : Colors.purple,
         onPressed: () async {
-          await Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) {
-            return WorkSpace(existingNote: widget.note);
-          }));
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => NoteEditor(existingNote: widget.note),
+            ),
+          );
         },
         child: Icon(Icons.arrow_forward),
       ),

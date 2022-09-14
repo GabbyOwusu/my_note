@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'package:my_note/models/Note.dart';
-import 'package:share/share.dart';
 
 class Options extends StatelessWidget {
   final Note note;
 
-  Options({this.note});
+  const Options({Key? key, required this.note});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class Options extends StatelessWidget {
             SizedBox(height: 10),
             GestureDetector(
               onTap: () {
-                share(context, note);
+                // share(context, note);
                 Navigator.pop(context);
               },
               child: Padding(
@@ -125,7 +125,7 @@ class Options extends StatelessWidget {
   }
 }
 
-void share(BuildContext context, Note note) {
-  String text = '${note.title}\n ${note.text}';
-  Share.share(text, subject: note.text);
-}
+// void share(BuildContext context, Note note) {
+//   String text = '${note.title}\n ${note.text}';
+//   Share.share(text, subject: note.text);
+// }

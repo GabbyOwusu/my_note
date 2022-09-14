@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:image_picker/image_picker.dart';
 import 'package:my_note/services/file_contract.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -20,48 +19,42 @@ class FileService implements FileContract {
       await file.writeAsString(data);
       return true;
     } catch (e) {
-      print('Failed to save...$e');
       return false;
     }
   }
 
   @override
-  Future<String> readFile(String uri) async {
+  Future readFile(String uri) async {
     try {
       final path = await getPath(uri);
       File file = File(path);
-      final result = await file?.readAsString();
+      final result = await file.readAsString();
       return result;
-    } on FileSystemException catch (e) {
-      print('Failed to read $e');
-      return '';
-    }
-  }
-
-  @override
-  Future<PickedFile> getImage(ImageSource source) async {
-    ImagePicker picker = ImagePicker();
-    PickedFile picture = await picker.getImage(
-      source: source,
-      preferredCameraDevice: CameraDevice.rear,
-    );
-    return picture;
-  }
-
-  @override
-  Future<String> getImagePath() async {
-    Directory dir = await getApplicationDocumentsDirectory();
-    final diff = DateTime.now();
-    ImagePicker picker = ImagePicker();
-    PickedFile pic = await picker.getImage(source: ImageSource.gallery);
-    if (pic != null) {
-      File picture = File(pic.path);
-      File imagePath = await picture.copy(dir.path + 'note-2-$diff.png');
-      return imagePath.path;
-    } else {
+    } catch (e) {
       return null;
     }
   }
+
+  // @override
+  // Future<PickedFile> getImage(ImageSource source) async {
+  // ImagePicker picker = ImagePicker();
+  // PickedFile picture = await picker.getImage(
+  //   source: source,
+  //   preferredCameraDevice: CameraDevice.rear,
+  // );
+  // return picture;
+  // }
+
+  // @override
+  // Future<String> getImagePath() async {
+  //   Directory dir = await getApplicationDocumentsDirectory();
+  //   final diff = DateTime.now();
+  //   ImagePicker picker = ImagePicker();
+  //   PickedFile pic = await picker.getImage(source: ImageSource.gallery);
+  //   File picture = File(pic.path);
+  //   File imagePath = await picture.copy(dir.path + 'note-2-$diff.png');
+  //   return imagePath.path;
+  // }
 
   @override
   Future deleteFile(String path) async {

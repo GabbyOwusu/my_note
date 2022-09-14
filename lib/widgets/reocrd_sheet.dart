@@ -9,9 +9,9 @@ class Recording extends StatefulWidget {
   final Note note;
   final Color color;
   const Recording({
-    Key key,
-    @required this.note,
-    @required this.color,
+    Key? key,
+    required this.note,
+    required this.color,
   }) : super(key: key);
 
   @override
@@ -41,21 +41,21 @@ class _RecordingState extends State<Recording> {
                 endRadius: 150,
                 child: GestureDetector(
                   onTap: () {
-                    setState(() => record = !record);
-                    if (record) {
-                      provider.addRecording(widget.note);
-                    } else {
-                      provider.stopRecording();
-                      Future.delayed(Duration(milliseconds: 400), () {
-                        Navigator.pop(context);
-                      });
-                    }
+                    // setState(() => record = !record);
+                    // if (record) {
+                    //   provider.addRecording(widget.note);
+                    // } else {
+                    //   provider.stopRecording();
+                    //   Future.delayed(Duration(milliseconds: 400), () {
+                    //     Navigator.pop(context);
+                    //   });
+                    // }
                   },
                   child: Container(
                     height: 120,
                     width: 120,
                     decoration: BoxDecoration(
-                      color: widget.color ?? Colors.purple,
+                      color: Colors.purple,
                       shape: BoxShape.circle,
                       border: Border.all(color: Colors.white, width: 3),
                     ),

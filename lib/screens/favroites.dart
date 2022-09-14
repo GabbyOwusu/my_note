@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+
 import 'package:my_note/providers/favorites_provider.dart';
 import 'package:my_note/widgets/note_tile.dart';
 import 'package:provider/provider.dart';
+import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
+import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
 
 class Favorites extends StatefulWidget {
   @override
@@ -16,7 +18,7 @@ class _FavoritesState extends State<Favorites> {
     return Provider.of<FavoritesProvider>(context, listen: false);
   }
 
-  Future<bool> _showDialog() async {
+  Future<bool?> _showDialog() async {
     return await showDialog<bool>(
       context: context,
       builder: (context) {
@@ -99,11 +101,9 @@ class _FavoritesState extends State<Favorites> {
                         crossAxisSpacing: 12,
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
-                        itemCount: provider.favs?.length,
+                        itemCount: provider.favs.length,
                         itemBuilder: (context, index) {
-                          return HomeNoteItem(
-                            note: provider.favs[index],
-                          );
+                          return NoteTile(note: provider.favs[index]);
                         },
                         staggeredTileBuilder: (int index) {
                           return StaggeredTile.fit(isActive ? 1 : 2);

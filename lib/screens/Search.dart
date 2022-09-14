@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:my_note/models/Note.dart';
 import 'package:my_note/providers/notes_provider.dart';
 import 'package:my_note/widgets/note_tile.dart';
 import 'package:provider/provider.dart';
+import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
+import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -72,8 +73,8 @@ class _SearchPageState extends State<SearchPage> {
                         result = provider.notes
                             .where(
                               (n) =>
-                                  n.text.toLowerCase().contains(text) ||
-                                  n.title.toLowerCase().contains(text),
+                                  (n.text ?? '').toLowerCase().contains(text) ||
+                                  (n.title ?? '').toLowerCase().contains(text),
                             )
                             .toList();
                       });
@@ -138,9 +139,7 @@ class _SearchPageState extends State<SearchPage> {
                         physics: NeverScrollableScrollPhysics(),
                         itemCount: result.length,
                         itemBuilder: (context, index) {
-                          return HomeNoteItem(
-                            note: result[index],
-                          );
+                          return NoteTile(note: result[index]);
                         },
                         staggeredTileBuilder: (int index) {
                           return StaggeredTile.fit(1);

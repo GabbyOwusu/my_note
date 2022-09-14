@@ -1,37 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:my_note/models/Note.dart';
-import 'package:my_note/providers/notes_provider.dart';
-import 'package:my_note/screens/lockscreen.dart';
-import 'package:my_note/screens/editor.dart';
-import 'package:provider/provider.dart';
+import 'package:my_note/screens/lock_screen.dart';
+import 'package:my_note/screens/note_editor.dart';
 
-class HomeNoteItem extends StatefulWidget {
+class NoteTile extends StatelessWidget {
   final Note note;
-  HomeNoteItem({@required this.note});
+  final void Function()? onTap;
 
-  @override
-  _HomeNoteItemState createState() => _HomeNoteItemState();
-}
+  NoteTile({
+    required this.note,
+    this.onTap,
+  });
 
-class _HomeNoteItemState extends State<HomeNoteItem> {
-  DateTime now = DateTime.now();
-  NotesProvider get provider {
-    return Provider.of(context);
-  }
+  final DateTime now = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        await Navigator.push(
+        Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => widget.note.locked == false
-                ? WorkSpace(existingNote: widget.note)
-                : LockScreen(note: widget.note),
+            builder: (context) => note.locked == false
+                ? NoteEditor(existingNote: note)
+                : LockScreen(note: note),
           ),
         );
-        // setState(() {});
+        onTap?.call();
       },
       child: AnimatedContainer(
         duration: Duration(milliseconds: 1500),
@@ -43,21 +38,21 @@ class _HomeNoteItemState extends State<HomeNoteItem> {
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
+          children: [
             Row(
               children: [
                 Container(
                   height: 8,
                   width: 8,
                   decoration: BoxDecoration(
-                    color: widget.note.indicator ?? Colors.purple,
+                    color: note.indicator ?? Colors.purple,
                     shape: BoxShape.circle,
                   ),
                 ),
                 SizedBox(width: 10),
                 Expanded(
                   child: Text(
-                    widget.note.title ?? '',
+                    note.title ?? '',
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontSize: 17,
@@ -69,9 +64,9 @@ class _HomeNoteItemState extends State<HomeNoteItem> {
               ],
             ),
             SizedBox(height: 10),
-            widget.note.locked == false
+            note.locked == false
                 ? Text(
-                    widget.note.text ?? '',
+                    note.text ?? '',
                     overflow: TextOverflow.ellipsis,
                     maxLines: 10,
                     style: TextStyle(
@@ -85,9 +80,9 @@ class _HomeNoteItemState extends State<HomeNoteItem> {
             Align(
               alignment: Alignment.bottomRight,
               child: Text(
-                widget.note.date == now
+                note.date == now
                     ? 'Created at ${now.day}-${now.month}-${now.year}'
-                    : 'Last Edited : ${widget.note.date.day}/${widget.note.date.month}/${widget.note.date.year}',
+                    : 'Last Edited : ${note.date?.day}/${note.date?.month}/${note.date?.year}',
                 style: TextStyle(
                   color: Colors.grey,
                   fontSize: 11,

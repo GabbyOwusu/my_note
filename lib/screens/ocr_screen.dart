@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:my_note/providers/notes_provider.dart';
 import 'package:my_note/widgets/image_button.dart';
 import 'package:provider/provider.dart';
@@ -101,33 +100,35 @@ class _OcrState extends State<Ocr> {
           ],
         ),
       ),
-      bottomSheet: Container(
-        height: 120,
-        child: Column(
-          children: [
-            ImageButton(
-              ontapped: () {
-                provider.processImage(ImageSource.camera).then((_) {
-                  setState(() {});
-                });
-              },
-              title: 'Scan',
-              icon: Icons.camera,
-              textColor: Colors.white,
-              color: Colors.blue,
-            ),
-            ImageButton(
-              ontapped: () {
-                provider.processImage(ImageSource.gallery).then((_) {
-                  setState(() {});
-                });
-              },
-              title: 'Gallery',
-              icon: Icons.image,
-              textColor: Theme.of(context).primaryColor,
-              color: Colors.grey[300],
-            ),
-          ],
+      bottomNavigationBar: SafeArea(
+        child: Container(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ImageButton(
+                ontapped: () {
+                  // provider.processImage(ImageSource.camera).then((_) {
+                  //   setState(() {});
+                  // });
+                },
+                title: 'Scan',
+                icon: Icons.camera,
+                textColor: Colors.white,
+                color: Colors.blue,
+              ),
+              ImageButton(
+                ontapped: () {
+                  // provider.processImage(ImageSource.gallery).then((_) {
+                  //   setState(() {});
+                  // });
+                },
+                title: 'Gallery',
+                icon: Icons.image,
+                textColor: Theme.of(context).primaryColor,
+                color: Colors.grey[300]!,
+              ),
+            ],
+          ),
         ),
       ),
     );

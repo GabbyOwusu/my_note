@@ -38,6 +38,10 @@ class MyApp extends StatelessWidget {
           disabledColor: Color.fromRGBO(182, 182, 182, 50),
           brightness: Brightness.light,
           textTheme: ThemeData.dark().textTheme.apply(fontFamily: 'SFUI'),
+          pageTransitionsTheme: const PageTransitionsTheme(builders: {
+            TargetPlatform.iOS: ZoomPageTransitionsBuilder(),
+            TargetPlatform.android: ZoomPageTransitionsBuilder(),
+          }),
         ),
         theme: ThemeData(
           brightness: Brightness.light,
@@ -50,6 +54,10 @@ class MyApp extends StatelessWidget {
           buttonColor: Colors.lightBlueAccent,
           disabledColor: Colors.grey.shade300,
           fontFamily: 'SFUI',
+          pageTransitionsTheme: const PageTransitionsTheme(builders: {
+            TargetPlatform.iOS: ZoomPageTransitionsBuilder(),
+            TargetPlatform.android: ZoomPageTransitionsBuilder(),
+          }),
         ),
         home: Splash(),
         // routes: {

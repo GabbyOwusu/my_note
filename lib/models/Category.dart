@@ -3,11 +3,11 @@ import 'package:flutter/foundation.dart';
 import 'package:my_note/models/Note.dart';
 
 class Category {
-  List<Note> categoryNotes;
-  String title;
+  List<Note>? categoryNotes;
+  String? title;
   Category({this.categoryNotes, this.title});
 
-  Category copyWith({List<Note> categoryNotes, String title}) {
+  Category copyWith({List<Note>? categoryNotes, String? title}) {
     return Category(
       categoryNotes: categoryNotes ?? this.categoryNotes,
       title: title ?? this.title,
@@ -16,13 +16,12 @@ class Category {
 
   Map<String, dynamic> toMap() {
     return {
-      'categoryNotes': categoryNotes?.map((x) => x?.toJSON())?.toList(),
+      'categoryNotes': categoryNotes?.map((x) => x.toJSON()).toList(),
       'title': title,
     };
   }
 
   factory Category.fromMap(Map<String, dynamic> map) {
-    if (map == null) return null;
     return Category(
       categoryNotes: List<Note>.from(
         map['categoryNotes']?.map(

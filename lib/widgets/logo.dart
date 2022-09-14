@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class Logo extends StatelessWidget {
   const Logo({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

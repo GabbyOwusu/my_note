@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:speech_to_text/speech_to_text.dart' as stt;
+// import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 class SpeechScreen extends StatefulWidget {
   @override
@@ -7,61 +7,37 @@ class SpeechScreen extends StatefulWidget {
 }
 
 class _SpeechScreenState extends State<SpeechScreen> {
-  stt.SpeechToText _speech;
+  // late stt.SpeechToText _speech;
   bool isRecording = false;
-  String recordedText;
+  String? recordedText;
 
   @override
   void initState() {
-    _speech = stt.SpeechToText();
+    // _speech = stt.SpeechToText();
     super.initState();
   }
 
-  Future<void> record() async {
-    if (!isRecording) {
-      bool available = await _speech.initialize(
-        onError: (val) {
-          print('Sorry : $val');
-          return showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: Text(
-                  'Sorry you need an active internet connection for speech_to_text functionality',
-                ),
-                actions: [
-                  FlatButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    onPressed: () {
-                      setState(() => isRecording = false);
-                      Navigator.pop(context);
-                    },
-                    child: Text('Cancel'),
-                  ),
-                ],
-              );
-            },
-          );
-        },
-        onStatus: (val) => print('onstatus : $val'),
-      );
-      if (available) {
-        setState(() => isRecording = true);
-        _speech.listen(onResult: (val) {
-          setState(() {
-            recordedText = val.recognizedWords;
-          });
-        });
-      }
-    } else {
-      _speech.stop();
-      setState(() {
-        isRecording = false;
-      });
-    }
-  }
+  // Future<dynamic> record() async {
+  //   if (!isRecording) {
+  //     bool available = await _speech.initialize(
+  //       onError: (val) {},
+  //       onStatus: (val) => print('onstatus : $val'),
+  //     );
+  //     if (available) {
+  //       setState(() => isRecording = true);
+  //       _speech.listen(onResult: (val) {
+  //         setState(() {
+  //           recordedText = val.recognizedWords;
+  //         });
+  //       });
+  //     }
+  //   } else {
+  //     _speech.stop();
+  //     setState(() {
+  //       isRecording = false;
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -131,7 +107,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
             Padding(
               padding: EdgeInsets.only(left: 20, right: 20, top: 150),
               child: SelectableText(
-                recordedText ?? 'Your recorded text will appear here....',
+                'Your recorded text will appear here....',
                 style: TextStyle(
                   fontSize: 25,
                   color: recordedText == null ? Colors.grey : Colors.black,
@@ -143,7 +119,7 @@ class _SpeechScreenState extends State<SpeechScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Record',
-        onPressed: record,
+        onPressed: () {},
         child: isRecording
             ? Image.asset('images/record.gif', color: Colors.white, width: 30)
             : Image.asset(

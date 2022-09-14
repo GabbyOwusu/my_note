@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CategoryItem extends StatelessWidget {
   const CategoryItem({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

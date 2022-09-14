@@ -18,25 +18,28 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
+
+dependency_overrides:
+  platform: ^3.1.0  
 
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: 
-  flutter_staggered_grid_view: 
-  flutter_colorpicker: 
-  get_it: 
-  path_provider: 
-  provider: 
-  share: 
-  speech_to_text: 
-  firebase_ml_vision: 
-  image_picker: 
-  local_auth: 
-  avatar_glow:
-  flutter_audio_recorder:   
-  audioplayers:
+  cupertino_icons: ^1.0.5
+  staggered_grid_view_flutter: ^0.0.4
+  flutter_colorpicker: ^1.0.3
+  get_it: ^7.2.0 
+  path_provider: ^2.0.11 
+  provider: ^6.0.3
+  share_plus: ^4.1.0
+  speech_to_text: ^5.6.1 
+  image_picker: ^0.8.5+3 
+  local_auth: ^2.1.2
+  avatar_glow: ^2.0.2
+
+
+ 
   
   
 

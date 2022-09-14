@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class Note {
-  String title;
-  String text;
-  DateTime date;
-  bool locked;
-  bool isFavorite;
-  Color indicator;
-  String imagePath;
-  String audioPath;
+  String? title;
+  String? text;
+  DateTime? date;
+  bool? locked;
+  bool? isFavorite;
+  Color? indicator;
+  String? imagePath;
+  String? audioPath;
 
   Note({
     this.title = '',
@@ -16,7 +16,7 @@ class Note {
     this.date,
     this.locked = false,
     this.isFavorite = false,
-    this.indicator = Colors.purple,
+    // this.indicator = Colors.purple,
     this.imagePath,
     this.audioPath,
   });
@@ -27,7 +27,7 @@ class Note {
       text: json["text"],
       date: DateTime.tryParse(json["date"]),
       locked: json["locked"],
-      indicator: json["indicator"],
+      // indicator: json["indicator"],
       imagePath: json["imagePath"],
       isFavorite: json["isFavorite"],
       audioPath: json["audioPath"],
@@ -37,7 +37,7 @@ class Note {
   static List<Note> fromJSONList(List<Map<String, dynamic>> json) {
     final list = <Note>[];
     json.forEach((note) => list.add(Note.fromJSON(note)));
-    return list;
+    return list.toList();
   }
 
   Map<String, dynamic> toJSON() {
@@ -46,7 +46,7 @@ class Note {
       "text": text,
       "date": date?.toString(),
       "locked": locked,
-      "indiator": indicator.toString(),
+      // "indiator": indicator.toString(),
       "imagePath": imagePath,
       "isFavorite": isFavorite,
       "audioPath": audioPath,
